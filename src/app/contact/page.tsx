@@ -26,7 +26,7 @@ export default function ContactPage() {
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
         <Image
           src="/images/contact-hero.png"
-          alt="Event planning consultation at City Heights Events Chennai"
+          alt="Trading course consultation at Prime Strike Chennai"
           fill
           priority
           className="object-cover object-center"
@@ -40,12 +40,12 @@ export default function ContactPage() {
               Get in Touch
             </p>
             <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold text-white font-[family-name:var(--font-poppins)] tracking-tighter leading-[0.85] mb-8">
-              Let&apos;s Plan
+              Let&apos;s Learn
               <br />
               Together
             </h1>
             <p className="text-lg md:text-xl text-white/50 max-w-2xl mx-auto leading-relaxed font-light">
-              From initial concept to flawless execution. Our team in Chennai is ready to bring your vision to life.
+              Master Options trading and Technical Analysis. Our Chennai team is here to support your learning journey.
             </p>
           </AnimatedSection>
         </div>
@@ -66,7 +66,7 @@ export default function ContactPage() {
                     Our Offices
                   </h2>
                   <p className="text-white/40 leading-relaxed max-w-md">
-                    Based in Chennai with two offices strategically located for seamless event coordination across the city and beyond.
+                    Based in Chennai with two centers strategically located for trading mentoring and weekend portfolio reviews.
                   </p>
                 </div>
 
@@ -161,10 +161,10 @@ export default function ContactPage() {
 
                 <div className="relative z-10">
                   <h2 className="text-3xl font-bold text-white font-[family-name:var(--font-poppins)] tracking-tight mb-4">
-                    Event Enquiry
+                    Course Enquiry
                   </h2>
                   <p className="text-white/30 text-sm mb-10">
-                    Tell us about your event. We respond to every enquiry within 24 hours.
+                    Tell us about your trading goals. We respond to every enquiry within 24 hours.
                   </p>
 
                   <form
@@ -206,16 +206,16 @@ export default function ContactPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div className="space-y-2">
                         <label className="text-[10px] uppercase tracking-widest text-gold/30 ml-4 font-medium">
-                          Event Type
+                          Course Interest
                         </label>
                         <Input
                           className="rounded-full bg-white/5 border-gold/10 text-white h-14 px-6 focus:border-gold/30"
-                          placeholder="Wedding, Corporate, etc."
+                          placeholder="Options, Technical Analysis, etc."
                         />
                       </div>
                       <div className="space-y-2">
                         <label className="text-[10px] uppercase tracking-widest text-gold/30 ml-4 font-medium">
-                          Preferred Date
+                          Preferred Batch Date
                         </label>
                         <Input
                           type="date"
@@ -226,11 +226,11 @@ export default function ContactPage() {
 
                     <div className="space-y-2">
                       <label className="text-[10px] uppercase tracking-widest text-gold/30 ml-4 font-medium">
-                        Tell Us About Your Event
+                        Tell Us About Your Goals
                       </label>
                       <Textarea
                         className="rounded-[2rem] bg-white/5 border-gold/10 text-white p-6 focus:border-gold/30 min-h-[150px]"
-                        placeholder="Describe your event vision, expected guest count, and any special requirements..."
+                        placeholder="Describe your trading experience, current goals, and any specific questions you have..."
                       />
                     </div>
 
@@ -262,7 +262,7 @@ export default function ContactPage() {
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_0%,transparent_100%)]" />
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-8xl md:text-[12rem] font-bold text-gold/[0.03] font-[family-name:var(--font-poppins)] select-none">
-                  CITY HEIGHTS
+                  PRIME STRIKE
                 </div>
               </div>
               <div className="absolute top-1/4 left-1/4 w-2 h-2 rounded-full bg-gold/40 animate-ping" />
@@ -270,7 +270,7 @@ export default function ContactPage() {
 
               <div className="absolute inset-0 flex items-center justify-center p-12">
                 <p className="text-white/40 text-lg max-w-xl font-light italic leading-relaxed">
-                  &ldquo;We don&apos;t just plan events. We create experiences that people remember for a lifetime.&rdquo;
+                  &ldquo;Trading is not about being right on every setup. It is about protecting your capital when you are wrong.&rdquo;
                 </p>
               </div>
             </div>

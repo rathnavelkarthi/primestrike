@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { CalendarDays, MapPin, ArrowRight, Sparkles, Users, Clock, Music } from "lucide-react";
+import { CalendarDays, MapPin, ArrowRight, Sparkles, Users, Clock, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AnimatedSection } from "@/components/animated-section";
@@ -13,9 +13,9 @@ export default function EventsPage() {
     ...FEATURED_EVENT,
     image: "/images/event-featured.png",
     stats: [
-      { label: "Guests", value: "500+", icon: Users },
+      { label: "Students", value: "500+", icon: Users },
       { label: "Duration", value: "8 Hours", icon: Clock },
-      { label: "Artists", value: "4 Performers", icon: Music },
+      { label: "Curriculum", value: "Options Hedging", icon: BookOpen },
     ],
   };
 
@@ -39,31 +39,31 @@ export default function EventsPage() {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <Image
           src="/images/events-hero.png"
-          alt="Grand celebration event by City Heights Events Chennai"
+          alt="Online trading webinars and live masterclasses screen"
           fill
           priority
           className="object-cover object-center"
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/90" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,black_100%)] opacity-60" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
 
         <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
           <AnimatedSection>
             <p className="text-xs uppercase tracking-[0.4em] text-gold/50 mb-6 font-[family-name:var(--font-poppins)]">
-              Our Events
+              Our Webinars
             </p>
           </AnimatedSection>
           <AnimatedSection delay={0.08}>
             <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold text-white font-[family-name:var(--font-poppins)] tracking-tighter leading-[0.85] mb-8">
-              Unforgettable
+              Interactive
               <br />
-              Celebrations
+              Webinars
             </h1>
           </AnimatedSection>
           <AnimatedSection delay={0.16}>
             <p className="text-lg md:text-xl text-white/50 max-w-2xl mx-auto leading-relaxed font-light">
-              Discover our upcoming curated experiences and signature events across Chennai.
+              Discover our upcoming live trading sessions and options strategy webinars.
             </p>
           </AnimatedSection>
           <AnimatedSection delay={0.24}>
@@ -117,7 +117,7 @@ export default function EventsPage() {
               <div className="flex-1 lg:pl-8">
                 <AnimatedSection delay={0.2}>
                   <Badge className="bg-gold/10 text-gold/70 border-gold/20 hover:bg-gold/15 transition-colors uppercase tracking-[0.2em] px-4 py-1 mb-6 rounded-full text-[10px]">
-                    Featured Event
+                    Featured Session
                   </Badge>
                   <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-[family-name:var(--font-poppins)] tracking-tight leading-tight mb-8">
                     {featured.title}
@@ -165,14 +165,14 @@ export default function EventsPage() {
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
               <div className="max-w-xl">
                 <p className="text-xs uppercase tracking-[0.3em] text-gold/50 mb-4 font-[family-name:var(--font-poppins)]">
-                  Coming Soon
+                  Live Schedule
                 </p>
                 <h2 className="text-4xl md:text-5xl font-bold text-white font-[family-name:var(--font-poppins)] tracking-tight leading-none">
-                  Upcoming Events
+                  Upcoming Webinars
                 </h2>
               </div>
               <Button variant="link" className="text-gold/40 hover:text-gold p-0 h-auto group text-xs uppercase tracking-widest">
-                View All Events
+                View All Sessions
                 <ArrowRight className="ml-2 h-3 w-3 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
@@ -239,16 +239,16 @@ export default function EventsPage() {
 
             <AnimatedSection>
               <h2 className="text-4xl md:text-6xl font-bold text-white font-[family-name:var(--font-poppins)] tracking-tighter mb-8 bg-gradient-to-b from-white to-white/40 bg-clip-text text-transparent">
-                Your Vision,
+                Structured
                 <br />
-                Our Expertise
+                Trading Path
               </h2>
               <p className="text-white/40 text-lg max-w-lg mx-auto mb-10 leading-relaxed font-light">
-                Planning a milestone event in Chennai? Let City Heights transform your concept into an unforgettable celebration.
+                Ready to learn options trading and price action? Join Prime Strike webinars to build consistency and discipline.
               </p>
               <Button asChild size="lg" className="rounded-full bg-gold text-gold-foreground hover:bg-gold/90 px-12 py-7 group">
                 <Link href="/contact">
-                  Start Planning
+                  Enroll Now
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>

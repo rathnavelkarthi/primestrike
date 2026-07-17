@@ -10,41 +10,41 @@ import { AnimatedSection } from "@/components/animated-section";
 import { PRICING_TIERS } from "@/lib/constants";
 
 const categories = [
-  { title: "Corporate Events", image: "/images/cat-corporate.png", alt: "Corporate event setup in Chennai" },
-  { title: "Weddings", image: "/images/cat-wedding.png", alt: "Traditional wedding reception in Chennai" },
-  { title: "Concerts", image: "/images/cat-concert.png", alt: "Live concert at a Chennai venue" },
-  { title: "Festivals", image: "/images/cat-festival.png", alt: "Cultural festival celebration in Chennai" },
+  { title: "Stock Trading", image: "/images/cat-corporate.png", alt: "Stock market basics coaching" },
+  { title: "Options Course", image: "/images/cat-wedding.png", alt: "Advanced options and hedging course" },
+  { title: "Technical Analysis", image: "/images/cat-concert.png", alt: "Technical analysis webinar course" },
+  { title: "Algo Webinars", image: "/images/cat-festival.png", alt: "Algorithmic systematic trading webinars" },
 ];
 
 const portfolio = [
-  { title: "Grand Wedding Reception", location: "ITC Grand Chola, Chennai", image: "/images/port-dubai.png", caption: "A magnificent reception for 1,000 guests with bespoke decor and live entertainment." },
-  { title: "Tech Summit 2025", location: "Hilton, Chennai", image: "/images/port-singapore.png", caption: "A two-day innovation summit for 500 leaders in technology and business." },
-  { title: "Private Gala Dinner", location: "The Leela Palace, Chennai", image: "/images/port-london.png", caption: "An intimate black-tie dinner with curated entertainment and fine dining." },
-  { title: "Summer Music Festival", location: "YMCA Grounds, Nandanam", image: "/images/port-ibiza.png", caption: "An open-air festival featuring top artists and immersive stage production." },
+  { title: "Options Buying Setup", location: "Online Webinar", image: "/images/port-dubai.png", caption: "A live session analyzing momentum setups and quick scalp executions using price action." },
+  { title: "Volume Profile Seminar", location: "Nungambakkam Center", image: "/images/port-singapore.png", caption: "An interactive weekend workshop detailing volume profile support zones and intraday entries." },
+  { title: "Basic Equity Guidance", location: "Online Webinar", image: "/images/port-london.png", caption: "A beginner-friendly session showing how to open demat accounts and read basic candlestick structures." },
+  { title: "Systematic Algo Coding", location: "Online Webinar", image: "/images/port-ibiza.png", caption: "A live workshop explaining broker APIs and backtesting simple trading scripts using Python." },
 ];
 
 const offerings = [
   {
-    title: "Venue Sourcing & Curation",
-    description: "We scout, negotiate, and secure Chennai's most sought-after venues — from luxury hotel ballrooms to open-air beachside locations. Every space is chosen to match the energy and ambition of your event.",
-    bullets: ["Exclusive Venue Partnerships", "Technical Feasibility Surveys", "Permitting & Logistics"],
+    title: "Interactive Webinar Learning",
+    description: "We provide access to high-quality live webinars where you can interact directly with mentors. From live chat questions to real-time chart analysis, we ensure an engaging learning environment.",
+    bullets: ["Live Chat & Q&A Sessions", "Interactive Chart Reviews", "Session Recordings for Revision"],
     image: "/images/offering-venue.png",
-    alt: "Luxury venue setup in Chennai",
+    alt: "Live interactive webinar screen",
   },
   {
-    title: "Artist & Entertainment Management",
-    description: "From headliner booking to full backstage logistics, we handle every detail of entertainment management so your lineup delivers a memorable experience.",
-    bullets: ["Talent Procurement & Booking", "Technical & Sound Management", "Full Backstage Coordination"],
+    title: "One-on-One Mentorship Support",
+    description: "Accelerate your learning curve with personal reviews. We analyze your trade journals, discuss execution mistakes, and help you refine your trading plan to fit your risk appetite.",
+    bullets: ["Trade Journal Audits", "Risk Allocation Reviews", "Personalized Strategy Feedback"],
     image: "/images/offering-artist.png",
-    alt: "Live artist performing at a Chennai event",
+    alt: "One-on-one trading mentorship review session",
   },
 ];
 
 const processSteps = [
-  { num: "01", title: "Consultation", description: "Deep dive into your vision and event goals. We understand your requirements before drafting a single plan." },
-  { num: "02", title: "Concept", description: "Creative brainstorming meets technical planning. Mood boards, floor plans, and run-of-show documents take shape." },
-  { num: "03", title: "Execution", description: "Professional on-site production and event management. Our crew runs the show while you enjoy it." },
-  { num: "04", title: "Post Event", description: "Media delivery, analytics, and review. We capture everything so the memories live on." },
+  { num: "01", title: "Foundation Class", description: "Learn the core concepts of stock markets, broker systems, and risk management tools." },
+  { num: "02", title: "Strategy Webinar", description: "Participate in interactive webinar sessions where we explain specific trading setups and backtest results." },
+  { num: "03", title: "Live Implementation", description: "Observe setups forming in the live market and practice drawing key levels with peer review." },
+  { num: "04", title: "Journal Review", description: "Submit your trade journal for personalized feedback on entries, exits, and emotional discipline." },
 ];
 
 export default function ServicesPage() {
@@ -56,7 +56,7 @@ export default function ServicesPage() {
       <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
         <Image
           src="/images/services-hero.png"
-          alt="Stunning event setup by City Heights Events"
+          alt="Online trading classes webinar preview"
           fill
           priority
           className="object-cover object-center"
@@ -68,19 +68,19 @@ export default function ServicesPage() {
         <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
           <AnimatedSection>
             <p className="text-xs uppercase tracking-[0.4em] text-gold/50 mb-6 font-[family-name:var(--font-poppins)]">
-              What We Do
+              Our Courses
             </p>
           </AnimatedSection>
           <AnimatedSection delay={0.08}>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white font-[family-name:var(--font-poppins)] tracking-tighter leading-[0.9]">
-              Crafting Extraordinary
+              Structured Trading
               <br />
-              Moments
+              Education
             </h1>
           </AnimatedSection>
           <AnimatedSection delay={0.16}>
             <p className="mt-8 text-lg text-white/45 max-w-xl mx-auto leading-relaxed">
-              From intimate gatherings to grand celebrations. We design experiences people never forget.
+              From stock market basics to advanced options strategies. Learn to analyze risk and trade with confidence.
             </p>
           </AnimatedSection>
           <AnimatedSection delay={0.24}>
@@ -91,7 +91,7 @@ export default function ServicesPage() {
                 className="text-base px-10 py-6 bg-gold text-gold-foreground hover:bg-gold/90 rounded-full group"
               >
                 <Link href="#categories">
-                  Explore Services
+                  Explore Courses
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
@@ -101,7 +101,7 @@ export default function ServicesPage() {
                 variant="outline"
                 className="text-base px-10 py-6 border-white/20 text-white hover:bg-white/10 rounded-full backdrop-blur-sm"
               >
-                <Link href="/contact">Plan Your Event</Link>
+                <Link href="/contact">Enquire Now</Link>
               </Button>
             </div>
           </AnimatedSection>
@@ -116,12 +116,12 @@ export default function ServicesPage() {
           <AnimatedSection>
             <div className="max-w-xl mb-16">
               <p className="text-xs uppercase tracking-[0.3em] text-gold/50 mb-4 font-[family-name:var(--font-poppins)]">
-                Event Categories
+                Course Categories
               </p>
               <h2 className="text-4xl md:text-5xl font-bold text-white font-[family-name:var(--font-poppins)] tracking-tight leading-[1.05]">
-                Every Format,
+                Tailored Formats,
                 <br />
-                One Standard
+                Structured Learning
               </h2>
             </div>
           </AnimatedSection>
@@ -143,7 +143,7 @@ export default function ServicesPage() {
                       {cat.title}
                     </h3>
                     <div className="mt-3 flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-gold/40 group-hover:text-gold/70 transition-colors">
-                      View events
+                      View course
                       <ArrowRight className="h-3 w-3 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
@@ -162,10 +162,10 @@ export default function ServicesPage() {
           <AnimatedSection>
             <div className="text-center max-w-xl mx-auto mb-16">
               <p className="text-xs uppercase tracking-[0.3em] text-gold/50 mb-4 font-[family-name:var(--font-poppins)]">
-                Signature Events
+                Webinar Archives
               </p>
               <h2 className="text-4xl md:text-5xl font-bold text-white font-[family-name:var(--font-poppins)] tracking-tight">
-                Our Portfolio
+                Session Portfolio
               </h2>
             </div>
           </AnimatedSection>
@@ -212,9 +212,9 @@ export default function ServicesPage() {
                 Core Offerings
               </p>
               <h2 className="text-4xl md:text-5xl font-bold text-white font-[family-name:var(--font-poppins)] tracking-tight leading-[1.05]">
-                What Sets
+                Why Learn
                 <br />
-                Us Apart
+                With Us
               </h2>
             </div>
           </AnimatedSection>
@@ -265,7 +265,7 @@ export default function ServicesPage() {
           <AnimatedSection>
             <div className="text-center max-w-xl mx-auto mb-20">
               <p className="text-xs uppercase tracking-[0.3em] text-gold/50 mb-4 font-[family-name:var(--font-poppins)]">
-                The City Heights Way
+                The Prime Strike Way
               </p>
               <h2 className="text-4xl md:text-5xl font-bold text-white font-[family-name:var(--font-poppins)] tracking-tight">
                 Our Process
@@ -309,7 +309,7 @@ export default function ServicesPage() {
                 Packages
               </p>
               <h2 className="text-4xl md:text-5xl font-bold text-white font-[family-name:var(--font-poppins)] tracking-tight">
-                Event Packages
+                Mentorship Packages
               </h2>
             </div>
           </AnimatedSection>
@@ -376,14 +376,14 @@ export default function ServicesPage() {
         <div className="mx-auto max-w-3xl px-6 text-center">
           <AnimatedSection>
             <h2 className="text-4xl md:text-6xl font-bold text-white font-[family-name:var(--font-poppins)] tracking-tight leading-[1.1]">
-              Ready to Create
+              Ready to Start
               <br />
-              Something Special?
+              Your Trading Journey?
             </h2>
           </AnimatedSection>
           <AnimatedSection delay={0.08}>
             <p className="mt-6 text-lg text-white/40 max-w-lg mx-auto leading-relaxed">
-              Join Chennai&apos;s most trusted event hosts. Let&apos;s bring your vision to life.
+              Join Chennai&apos;s structured trading community. Let&apos;s build your market discipline.
             </p>
           </AnimatedSection>
           <AnimatedSection delay={0.16}>
@@ -393,7 +393,7 @@ export default function ServicesPage() {
               className="mt-10 text-base px-12 py-6 bg-gold text-gold-foreground hover:bg-gold/90 rounded-full group"
             >
               <Link href="/contact">
-                Start Planning
+                Get Started
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>

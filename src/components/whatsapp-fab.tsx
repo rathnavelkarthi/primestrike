@@ -4,7 +4,7 @@ import { MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { SITE_WHATSAPP } from "@/lib/constants";
 
-const whatsappUrl = `https://wa.me/${SITE_WHATSAPP.replace(/[^0-9]/g, "")}?text=${encodeURIComponent("Hi, I'd like to enquire about event planning.")}`;
+const whatsappUrl = `https://wa.me/${SITE_WHATSAPP.replace(/[^0-9]/g, "")}?text=${encodeURIComponent("Hi, I'd like to enquire about the trading classes.")}`;
 
 export function WhatsAppFAB() {
   return (

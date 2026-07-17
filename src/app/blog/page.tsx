@@ -204,10 +204,10 @@ export default function BlogPage() {
           <AnimatedSection>
             <div className="text-center mb-20">
               <p className="text-xs uppercase tracking-[0.4em] text-gold/50 mb-4 font-[family-name:var(--font-poppins)] text-center">
-                From Our Experience
+                Mentor's Insights
               </p>
               <h2 className="text-4xl md:text-5xl font-bold text-white font-[family-name:var(--font-poppins)] tracking-tight text-center">
-                Event Planning Tips
+                Trading Strategy Tips
               </h2>
             </div>
           </AnimatedSection>
@@ -252,12 +252,12 @@ export default function BlogPage() {
           <div className="bg-neutral-900 border border-gold/5 p-12 md:p-20 rounded-[3rem] text-center">
             <AnimatedSection>
               <h2 className="text-4xl md:text-6xl font-bold text-white font-[family-name:var(--font-poppins)] tracking-tighter mb-6">
-                Stay in
+                Stay ahead of
                 <br />
-                the loop.
+                the market.
               </h2>
               <p className="text-white/40 text-lg mb-10 max-w-md mx-auto leading-relaxed">
-                Get curated event tips and industry updates delivered to your inbox.
+                Get weekly options analysis and price action guides delivered to your inbox.
               </p>
 
               <form

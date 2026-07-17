@@ -19,10 +19,10 @@ import {
 } from "@/lib/constants";
 
 const serviceImages = [
-  { src: "/images/service-party.png", alt: "Private party celebration in Chennai" },
-  { src: "/images/service-corporate.png", alt: "Corporate event at a luxury Chennai venue" },
-  { src: "/images/service-concert.png", alt: "Concert with stage lighting in Chennai" },
-  { src: "/images/service-wedding.png", alt: "Elegant wedding reception in Chennai" },
+  { src: "/images/service-party.png", alt: "Stock market basics classes in Chennai" },
+  { src: "/images/service-corporate.png", alt: "Options and derivatives trading course online" },
+  { src: "/images/service-concert.png", alt: "Technical analysis webinar session" },
+  { src: "/images/service-wedding.png", alt: "Advanced algorithmic trading mentorship" },
 ];
 
 export default function HomePage() {
@@ -34,7 +34,7 @@ export default function HomePage() {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <Image
           src="/images/hero.png"
-          alt="Grand event with dramatic lighting by City Heights Events"
+          alt="Premium stock market trading chart interface on screen"
           fill
           priority
           className="object-cover object-center"
@@ -46,7 +46,7 @@ export default function HomePage() {
         <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
           <AnimatedSection>
             <p className="text-xs uppercase tracking-[0.4em] text-gold/60 mb-8 font-[family-name:var(--font-poppins)]">
-              Premium Event Management &middot; Est. {EST_YEAR} &middot; Chennai
+              Premium Trading Academy &middot; Est. {EST_YEAR} &middot; Chennai
             </p>
           </AnimatedSection>
 
@@ -58,7 +58,7 @@ export default function HomePage() {
  
           <AnimatedSection delay={0.16}>
             <p className="mt-8 text-lg md:text-xl text-white/50 max-w-2xl mx-auto leading-relaxed">
-              Premium event planning and celebration management by Jabez Amirtharaj, based in Chennai.
+              Master the financial markets through interactive online webinars and direct mentorship.
             </p>
           </AnimatedSection>
  
@@ -71,7 +71,8 @@ export default function HomePage() {
                 style={{ color: 'black' }}
               >
                 <Link href="/contact">
-                  Plan Your Event
+                  Start Learning
+
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
@@ -90,7 +91,7 @@ export default function HomePage() {
                   e.currentTarget.style.backgroundColor = 'transparent';
                 }}
               >
-                <Link href="/events" style={{ color: 'inherit' }}>View Our Work</Link>
+                <Link href="/events" style={{ color: 'inherit' }}>Explore Webinars</Link>
               </Button>
             </div>
           </AnimatedSection>
@@ -110,12 +111,12 @@ export default function HomePage() {
           <AnimatedSection>
             <div className="max-w-xl mb-20">
               <p className="text-xs uppercase tracking-[0.3em] text-gold/50 mb-4 font-[family-name:var(--font-poppins)]">
-                Our Expertise
+                Our Programs
               </p>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-[family-name:var(--font-poppins)] tracking-tight leading-[1.05]">
-                Premium Event
+                Trading Course
                 <br />
-                Management
+                Curriculum
               </h2>
             </div>
           </AnimatedSection>
@@ -177,7 +178,7 @@ export default function HomePage() {
           <div className="flex items-center px-8 md:px-16 lg:px-24 py-20 md:py-0">
             <AnimatedSection delay={0.1}>
               <p className="text-xs uppercase tracking-[0.3em] text-gold/50 mb-6 font-[family-name:var(--font-poppins)]">
-                Featured Case Study
+                Featured Session
               </p>
               <h2 className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-poppins)] tracking-tight leading-[1.1] mb-8">
                 {CASE_STUDY.title}
@@ -187,16 +188,16 @@ export default function HomePage() {
               </p>
               <div className="flex flex-wrap gap-8 text-sm text-white/30 mb-10">
                 <div>
-                  <p className="text-2xl font-bold text-gold font-[family-name:var(--font-poppins)]">800+</p>
-                  <p>Guests</p>
+                  <p className="text-2xl font-bold text-gold font-[family-name:var(--font-poppins)]">10k+</p>
+                  <p>Students</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-gold font-[family-name:var(--font-poppins)]">10h</p>
-                  <p>Duration</p>
+                  <p className="text-2xl font-bold text-gold font-[family-name:var(--font-poppins)]">500+</p>
+                  <p>Webinars</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-gold font-[family-name:var(--font-poppins)]">2</p>
-                  <p>Stages</p>
+                  <p className="text-2xl font-bold text-gold font-[family-name:var(--font-poppins)]">92%</p>
+                  <p>Success Rate</p>
                 </div>
               </div>
               <Button
@@ -205,7 +206,7 @@ export default function HomePage() {
                 className="border-white/20 text-white hover:bg-white hover:text-black hover:border-white rounded-full px-8 group transition-all duration-300"
               >
                 <Link href="/events">
-                  View Our Events
+                  View Our Webinars
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
@@ -299,98 +300,36 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="text-center max-w-xl mx-auto mb-20">
             <p className="text-xs uppercase tracking-[0.3em] text-gold/50 mb-4 font-[family-name:var(--font-poppins)]">
-              Leadership Team
+              Academy Founder
             </p>
             <h2 className="text-4xl md:text-5xl font-bold font-[family-name:var(--font-poppins)] tracking-tight">
-              The Visionaries Behind City Heights
+              Meet our Mentor
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
-            {/* Jabez Amirtharaj - Founder */}
+          <div className="max-w-3xl mx-auto">
+            {/* Saranya - Founder */}
             <AnimatedSection>
-              <div className="group relative">
-                <div className="relative aspect-[3/4] overflow-hidden rounded-2xl mb-8 border border-white/5 transition-all duration-500 group-hover:border-gold/20">
+              <div className="group relative flex flex-col md:flex-row items-center gap-12">
+                <div className="relative w-64 h-80 overflow-hidden rounded-2xl border border-white/5 transition-all duration-500 group-hover:border-gold/20 flex-shrink-0">
                   <Image
-                    src="/landingpage.png"
-                    alt="Jabez Amirtharaj - Founder of City Heights Events"
+                    src="/images/saranya.jpg"
+                    alt="Saranya - Founder & Mentor of Prime Strike"
                     fill
                     className="object-cover transition-all duration-700"
-                    sizes="(max-width: 768px) 100vw, 40vw"
-                  />
-                  <div className="absolute inset-x-0 bottom-0 p-8 pt-20 bg-gradient-to-t from-black/90 to-transparent">
-                    <p className="text-sm font-semibold text-gold tracking-widest uppercase mb-1">Founder</p>
-                    <h3 className="text-3xl font-bold font-[family-name:var(--font-poppins)] tracking-tight">Jabez Amirtharaj</h3>
-                  </div>
-                </div>
-                <p className="text-white/40 leading-relaxed mb-6">
-                  With over a decade of excellence in luxury event management, Jabez founded City Heights Events in 2012 to set a new standard for celebration through bespoke coordination and world-class production.
-                </p>
-                <Link href="/jabez-amirtharaj" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-gold/60 hover:text-gold transition-colors font-semibold group/link">
-                  View Founder Profile <ArrowRight className="w-3 h-3 group-hover/link:translate-x-1 transition-transform" />
-                </Link>
-              </div>
-            </AnimatedSection>
-
-            {/* Rathnavel Karthi - Digital Head */}
-            <AnimatedSection delay={0.1}>
-              <div className="group relative">
-                <div className="relative aspect-[3/4] overflow-hidden rounded-2xl mb-8 border border-white/5 transition-all duration-500 group-hover:border-gold/20">
-                  <Image
-                    src="/founder_portrait.png"
-                    alt="Rathnavel Karthi - Digital Head of City Heights Events"
-                    fill
-                    className="object-cover transition-all duration-700"
-                    sizes="(max-width: 768px) 100vw, 40vw"
-                  />
-                  <div className="absolute inset-x-0 bottom-0 p-8 pt-20 bg-gradient-to-t from-black/90 to-transparent">
-                    <p className="text-sm font-semibold text-gold tracking-widest uppercase mb-1">Digital Head</p>
-                    <h3 className="text-3xl font-bold font-[family-name:var(--font-poppins)] tracking-tight">Rathnavel Karthi</h3>
-                  </div>
-                </div>
-                <p className="text-white/40 leading-relaxed mb-6">
-                  Rathnavel drives the technological and digital strategy of City Heights, integrating advanced automation and AI-driven platforms like SuperBots and New World Order into our world-class event services.
-                </p>
-                <Link href="/rathnavel-karthi" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-gold/60 hover:text-gold transition-colors font-semibold group/link">
-                  View Full Digital Portfolio <ArrowRight className="w-3 h-3 group-hover/link:translate-x-1 transition-transform" />
-                </Link>
-              </div>
-            </AnimatedSection>
-          </div>
-
-          {/* Teams / Tabular Column Divider */}
-          <div className="w-full h-px bg-white/5 my-24" />
-
-          <div className="text-center max-w-xl mx-auto mb-16">
-            <p className="text-xs uppercase tracking-[0.3em] text-gold/50 mb-4 font-[family-name:var(--font-poppins)]">
-              Core Team
-            </p>
-            <h2 className="text-3xl md:text-4xl font-bold font-[family-name:var(--font-poppins)] tracking-tight">
-              Our Talented Professionals
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Priyanka Venkatesan - Technical Aid */}
-            <AnimatedSection>
-              <div className="group relative bg-white/[0.02] border border-white/5 rounded-2xl p-6 hover:bg-white/[0.05] transition-all duration-300">
-                <div className="relative aspect-square overflow-hidden rounded-xl mb-6">
-                  <Image
-                    src="/priyanka.jpeg"
-                    alt="Priyanka Venkatesan - Technical Aid"
-                    fill
-                    className="object-cover transition-all duration-700 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, 30vw"
                   />
+                  <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/90 to-transparent">
+                    <p className="text-xs font-semibold text-gold tracking-widest uppercase mb-1">Founder & Mentor</p>
+                    <h3 className="text-2xl font-bold font-[family-name:var(--font-poppins)] tracking-tight">Saranya</h3>
+                  </div>
                 </div>
-                <div className="text-center">
-                  <p className="text-xs font-semibold text-gold tracking-widest uppercase mb-2">Technical Aid</p>
-                  <h3 className="text-xl font-bold font-[family-name:var(--font-poppins)] tracking-tight mb-3">Priyanka Venkatesan</h3>
-                  <p className="text-white/50 text-sm leading-relaxed mb-6">
-                    Power BI Developer and Data Analytics expert specializing in transforming complex data into actionable insights for strategic decision-making.
+                <div>
+                  <p className="text-white/40 leading-relaxed mb-6 text-base">
+                    With over eight years of active trading experience, Saranya founded Prime Strike to offer structured, rule-based trading education. Through interactive online webinars and direct journal feedback, she helps retail traders master options hedging and price action analysis.
                   </p>
-                  <Link href="/technical-aid" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-gold/60 hover:text-gold transition-colors font-semibold group/link">
-                    View Profile <ArrowRight className="w-3 h-3 group-hover/link:translate-x-1 transition-transform" />
+                  <Link href="/saranya" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-gold/60 hover:text-gold transition-colors font-semibold group/link">
+                    View Mentor Profile <ArrowRight className="w-3 h-3 group-hover/link:translate-x-1 transition-transform" />
                   </Link>
                 </div>
               </div>
@@ -403,9 +342,9 @@ export default function HomePage() {
           CTA
           ══════════════════════════════════════════════════ */}
       <CTA
-        title="Let's Create Something Extraordinary"
-        description="From intimate gatherings to grand celebrations. Your vision, our expertise."
-        buttonText="Start a Conversation"
+        title="Start Your Trading Journey Today"
+        description="From stock market basics to advanced options hedging. Master the markets with interactive live webinars."
+        buttonText="Enroll Now"
       />
     </>
   );

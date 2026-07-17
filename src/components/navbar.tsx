@@ -189,7 +189,7 @@ export function Navbar() {
                         className="w-full h-12 rounded-lg bg-gold text-gold-foreground hover:bg-gold/90 font-medium text-base group"
                       >
                         <Link href="/contact">
-                          Plan Your Event
+                          Start Learning
                           <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                         </Link>
                       </Button>
@@ -197,7 +197,7 @@ export function Navbar() {
                   />
 
                   <p className="text-center text-white/20 text-xs mt-6 tracking-wide">
-                    Luxury Event Management
+                    Premium Trading Academy
                   </p>
                 </motion.div>
               </div>

@@ -18,21 +18,21 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "City Heights Events | Premium Event Management in Chennai",
+  title: "Prime Strike | Interactive Trading School in Chennai",
   description:
-    "Premium event planning and celebration management by Jabez Amirtharaj. Weddings, corporate events, concerts, and festivals in Chennai.",
+    "Learn stock market trading and options hedging strategies from Saranya. Join our live webinars and online classes in Chennai.",
   openGraph: {
-    title: "City Heights Events | Premium Event Management in Chennai",
+    title: "Prime Strike | Interactive Trading School in Chennai",
     description:
-      "Premium event planning and celebration management by Jabez Amirtharaj. Weddings, corporate events, concerts, and festivals in Chennai.",
-    url: "http://www.cityheights.com",
-    siteName: "City Heights Events",
+      "Learn stock market trading and options hedging strategies from Saranya. Join our live webinars and online classes in Chennai.",
+    url: "https://www.primestrike.in",
+    siteName: "Prime Strike",
     images: [
       {
         url: "/images/services-hero.png",
         width: 1200,
         height: 630,
-        alt: "City Heights Events - Premium Event Management in Chennai",
+        alt: "Prime Strike - Premium Trading Academy in Chennai",
       },
     ],
     locale: "en_IN",
@@ -40,9 +40,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "City Heights Events | Premium Event Management in Chennai",
+    title: "Prime Strike | Interactive Trading School in Chennai",
     description:
-      "Premium event planning by Jabes Amirtharaj in Chennai.",
+      "Learn stock trading from Saranya in Chennai.",
     images: ["/images/services-hero.png"],
   },
 };

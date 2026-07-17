@@ -1,6 +1,6 @@
 // ─── Programmatic SEO data ───────────────────────────────
 // Each entry generates a unique /services/[slug] page targeting
-// "[event type] in [location]" search intent.
+// specific trading course terms.
 
 export interface PseoPage {
   slug: string;
@@ -18,493 +18,329 @@ export interface PseoPage {
 }
 
 export const PSEO_PAGES: PseoPage[] = [
-  // ─── Wedding planners ──────────────────────────────────
   {
-    slug: "wedding-planners-in-chennai",
-    title: "Wedding Planners in Chennai | City Heights Events",
-    h1: "Wedding Planners in Chennai",
+    slug: "trading-classes-in-chennai",
+    title: "Trading Classes in Chennai | Prime Strike Academy",
+    h1: "Trading Classes in Chennai",
     metaDescription:
-      "Looking for trusted wedding planners in Chennai? City Heights Events plans unforgettable weddings with bespoke decor, entertainment, and coordination. Est. 2012.",
+      "Join interactive trading classes in Chennai. Prime Strike offers live stock market webinars and option trading courses led by Saranya.",
     intro:
-      "Your wedding deserves to be extraordinary. City Heights Events has been helping couples across Chennai plan the wedding of their dreams since 2012. From traditional South Indian ceremonies to contemporary receptions, our team led by Jabes Amirtharaj handles every detail — venue selection, decor, catering, entertainment, and day-of coordination — so you can focus on making memories.",
+      "Learning to trade requires a structured path. Prime Strike has been conducting trading classes for students across Chennai. From basic stock market structures to complex option strategies, our courses led by Saranya focus on building real-time market analysis skills so you can trade with confidence.",
     whatWeOffer: [
-      "Complete wedding planning and coordination from engagement to reception",
-      "Bespoke decor and floral design tailored to your theme",
-      "Professional photography and videography coordination",
-      "Live entertainment and DJ booking",
-      "Catering management with top Chennai caterers",
-      "Guest management and RSVP coordination",
+      "Live webinars covering price action and market structures",
+      "Interactive doubt-solving sessions during market hours",
+      "Option buying and selling strategies with risk limits",
+      "Step-by-step guidance on setting up charts and indicators",
+      "Personal trade journal audits and performance feedback",
     ],
     whyChooseUs:
-      "With over a decade of experience and hundreds of weddings delivered across Chennai, City Heights Events understands the nuances of both traditional and modern celebrations. Our founder Jabes Amirtharaj personally oversees every wedding to ensure flawless execution.",
+      "We focus on risk management over finding perfect setups. Our founder Saranya personally conducts the webinars and reviews your trade journals to help you build execution discipline.",
     popularVenues: [
-      "ITC Grand Chola, Guindy",
-      "The Leela Palace, Adyar",
-      "Taj Coromandel, Nungambakkam",
-      "Sheraton Grand, T. Nagar",
-      "Radisson Blu, Paschim Vihar",
+      "Live Online Webinars via Zoom",
+      "In-person Meetups at Nungambakkam Office",
+      "One-on-One Mentoring Session Rooms",
     ],
     faqs: [
       {
-        q: "How much does a wedding planner cost in Chennai?",
-        a: "Wedding planning packages at City Heights Events start from ₹50,000 for day-of coordination and go up to ₹2,00,000+ for full-service planning including decor, entertainment, and vendor management. We offer custom quotes based on your requirements.",
+        q: "What is the fee for trading classes in Chennai?",
+        a: "Our foundation packages start from ₹9,000 for basic webinars and go up to ₹25,000 for the full Pro Trader mentorship program including live market sessions.",
       },
       {
-        q: "How early should I book a wedding planner in Chennai?",
-        a: "We recommend booking at least 3-6 months in advance for full-service planning. For peak wedding season (November-February), booking 6-12 months ahead ensures the best venue and vendor availability.",
+        q: "Do you offer offline classes?",
+        a: "Our main teaching is done via interactive online webinars. However, we hold monthly doubt-clearing sessions and portfolio review meetups at our Nungambakkam office.",
       },
       {
-        q: "Do you handle both traditional and modern weddings?",
-        a: "Absolutely. We have extensive experience with traditional South Indian weddings, Christian ceremonies, Muslim nikaahs, and contemporary fusion celebrations. Our team adapts to your cultural and personal preferences.",
+        q: "Who is this course suitable for?",
+        a: "The program is structured for beginners who want to start trading systematically, as well as intermediate traders struggling to maintain risk discipline.",
       },
     ],
     relatedSlugs: [
-      "wedding-reception-organisers-chennai",
-      "wedding-decorators-in-chennai",
-      "event-planners-nungambakkam",
+      "options-trading-course-online",
+      "stock-market-training-chennai",
+      "share-market-classes-nungambakkam",
     ],
-    eventType: "Wedding",
+    eventType: "Trading Class",
     location: "Chennai",
   },
   {
-    slug: "wedding-reception-organisers-chennai",
-    title: "Wedding Reception Organisers in Chennai | City Heights Events",
-    h1: "Wedding Reception Organisers in Chennai",
+    slug: "options-trading-course-online",
+    title: "Options Trading Course Online | Prime Strike Academy",
+    h1: "Options Trading Course Online",
     metaDescription:
-      "Professional wedding reception organisation in Chennai. City Heights Events delivers stunning receptions with decor, entertainment, and flawless coordination.",
+      "Learn options trading online. Prime Strike conducts webinar-based options courses covering option chain, hedging, and volatility strategies.",
     intro:
-      "The reception is where your celebration truly comes alive. City Heights Events specialises in creating grand wedding receptions across Chennai that leave your guests talking for years. Our team manages everything from stage design and lighting to entertainment and catering logistics, ensuring a seamless and spectacular evening.",
+      "Options trading is about managing risk, not just predicting direction. Our online options course covers everything from basic call and put options to complex multi-leg hedging strategies. We show you how to read option chains and manage trades under changing market volatility.",
     whatWeOffer: [
-      "Grand stage design and lighting concepts",
-      "Entry choreography and special effects",
-      "Live band and DJ entertainment",
-      "Multi-course catering coordination",
-      "Photo and video booth setups",
-      "Guest seating and flow management",
+      "Option Greeks analysis (Delta, Gamma, Theta, Vega)",
+      "Hedging strategies like spreads, iron condors, and butterflies",
+      "Live option chain analysis during market hours",
+      "Implied Volatility (IV) and IV Rank analysis",
+      "Position sizing guidelines for options buyers and sellers",
     ],
     whyChooseUs:
-      "We have organised receptions for 100 to 1,000+ guests at venues across Chennai. Our attention to detail in stage design, lighting, and guest flow ensures that your reception feels both grand and personal.",
+      "Unlike generic video courses, our classes are interactive online webinars. You can ask questions in real-time and see how strategies are adjusted as the market moves.",
     popularVenues: [
-      "ITC Grand Chola, Guindy",
-      "Crowne Plaza, Adyar",
-      "Hilton Chennai",
-      "Ambassador Pallava, Egmore",
-      "Residency Towers, T. Nagar",
+      "Live Interactive Zoom Webinars",
+      "Recorded Video Archive for Revision",
+      "Discord Trading Community Rooms",
     ],
     faqs: [
       {
-        q: "What is included in a wedding reception package?",
-        a: "Our reception packages include venue coordination, stage and decor design, lighting, entertainment booking, catering management, photography coordination, and day-of event management. Packages start from ₹75,000.",
+        q: "Is options trading risky for beginners?",
+        a: "Yes, without proper risk management. That is why our course starts with position sizing and hedging before introducing complex strategies.",
       },
       {
-        q: "Can you handle large receptions with 500+ guests?",
-        a: "Yes, we regularly manage receptions for 500-1,000+ guests. We have the logistics expertise and vendor network to handle large-scale events with ease.",
+        q: "Do you teach option buying or option selling?",
+        a: "We teach both. We explain when to buy options to benefit from momentum and when to sell options to benefit from time decay.",
       },
     ],
     relatedSlugs: [
-      "wedding-planners-in-chennai",
-      "wedding-decorators-in-chennai",
-      "corporate-event-planners-chennai",
+      "trading-classes-in-chennai",
+      "algo-trading-webinars",
+      "technical-analysis-webinars",
     ],
-    eventType: "Wedding Reception",
+    eventType: "Options Course",
+    location: "Online",
+  },
+  {
+    slug: "stock-market-training-chennai",
+    title: "Stock Market Training in Chennai | Prime Strike",
+    h1: "Stock Market Training in Chennai",
+    metaDescription:
+      "Learn stock market basics and equity trading in Chennai. Master price action and chart reading with Prime Strike webinars.",
+    intro:
+      "Get a solid foundation in equity markets. Our stock market training program is designed to help beginners understand market mechanics, choose the right broker, read candlestick charts, and place orders systematically.",
+    whatWeOffer: [
+      "Introduction to stock exchanges and market participants",
+      "How to open and configure trading accounts",
+      "Basic candlestick patterns and trend analysis",
+      "Support and resistance zone plotting",
+      "Introduction to delivery and intraday equity trading",
+    ],
+    whyChooseUs:
+      "We avoid complicated jargon. We explain stock market fundamentals in plain Tamil and English, focusing on rules that protect your initial capital.",
+    popularVenues: [
+      "Live Webinars and Interactive Sessions",
+      "Weekend Meetups in Nungambakkam Office",
+      "Kolathur Center Discussion Rooms",
+    ],
+    faqs: [
+      {
+        q: "Do I need a prior finance background to join?",
+        a: "Not at all. The training starts from absolute basics, explaining how shares are traded and how to analyze charts from scratch.",
+      },
+      {
+        q: "How long is the training program?",
+        a: "The foundation program spans 4 weeks of live weekend webinars, followed by 1 month of group mentorship support.",
+      },
+    ],
+    relatedSlugs: [
+      "trading-classes-in-chennai",
+      "share-market-classes-nungambakkam",
+      "day-trading-academy-chennai",
+    ],
+    eventType: "Stock Market Training",
     location: "Chennai",
   },
   {
-    slug: "wedding-decorators-in-chennai",
-    title: "Wedding Decorators in Chennai | City Heights Events",
-    h1: "Wedding Decorators in Chennai",
+    slug: "technical-analysis-webinars",
+    title: "Technical Analysis Webinars | Prime Strike",
+    h1: "Technical Analysis Webinars",
     metaDescription:
-      "Stunning wedding decoration services in Chennai. City Heights Events creates breathtaking floral, stage, and venue decor for weddings and receptions.",
+      "Master technical analysis and chart reading online. Learn price action, support-resistance, and volume profiles via live webinars.",
     intro:
-      "First impressions matter, and your wedding decor sets the tone for the entire celebration. City Heights Events offers bespoke wedding decoration services across Chennai — from traditional mandap designs to modern minimalist themes, elaborate floral installations, and dramatic lighting concepts that transform any venue into a visual masterpiece.",
+      "Charts tell a story of buyer and seller behavior. Our technical analysis webinars show you how to read this story without cluttering your screen with lagging indicators. Learn to identify high-probability price action setups and manage your risk systematically.",
     whatWeOffer: [
-      "Custom mandap and stage design",
-      "Floral installations and centrepieces",
-      "LED and ambient lighting design",
-      "Entrance and pathway decor",
-      "Table settings and linen coordination",
-      "Theme-based complete venue transformation",
+      "Advanced price action trading setups",
+      "Volume Profile and Market Profile analysis",
+      "Drawing valid support and resistance zones",
+      "Combining moving averages with momentum indicators",
+      "Multi-timeframe analysis for intraday trading",
     ],
     whyChooseUs:
-      "Our in-house design team works closely with you to bring your vision to life. Whether you want a classic temple-inspired mandap or a contemporary European garden theme, we have the creative range and vendor partnerships to execute any style flawlessly.",
+      "We focus on clean chart analysis. We teach you to read raw price movements and volume rather than relying on mathematical formulas that lag the market.",
     popularVenues: [
-      "The Leela Palace, Adyar",
-      "Taj Club House, Mount Road",
-      "Feathers Hotel, Anna Salai",
-      "Courtyard by Marriott, Nungambakkam",
-      "Kalaivanar Arangam",
+      "Interactive Webinar Platform",
+      "Live Market Chart Analysis Rooms",
+      "Mentorship Discord Channel",
     ],
     faqs: [
       {
-        q: "How much does wedding decoration cost in Chennai?",
-        a: "Wedding decoration costs in Chennai vary based on the theme, venue size, and floral requirements. Basic packages start around ₹30,000 for simple setups. Premium theme-based decor with floral installations typically ranges from ₹1,00,000 to ₹5,00,000+.",
+        q: "What indicators do you teach in the webinars?",
+        a: "We prioritize raw price action, candlesticks, and volume. We also explain how to use moving averages, RSI, and VWAP as secondary filters.",
       },
       {
-        q: "Can you match a specific theme or colour palette?",
-        a: "Absolutely. We work from mood boards, Pinterest references, or your own ideas to create a cohesive look across the entire venue. Our design team will present concepts for your approval before execution.",
+        q: "Are the webinars recorded?",
+        a: "Yes, all webinar sessions are recorded and uploaded to our student portal for life-long access.",
       },
     ],
     relatedSlugs: [
-      "wedding-planners-in-chennai",
-      "wedding-reception-organisers-chennai",
-      "birthday-party-organisers-chennai",
+      "options-trading-course-online",
+      "algo-trading-webinars",
+      "day-trading-academy-chennai",
     ],
-    eventType: "Wedding Decoration",
-    location: "Chennai",
+    eventType: "Technical Analysis",
+    location: "Online",
   },
-
-  // ─── Corporate events ──────────────────────────────────
   {
-    slug: "corporate-event-planners-chennai",
-    title: "Corporate Event Planners in Chennai | City Heights Events",
-    h1: "Corporate Event Planners in Chennai",
+    slug: "day-trading-academy-chennai",
+    title: "Day Trading Academy in Chennai | Prime Strike",
+    h1: "Day Trading Academy in Chennai",
     metaDescription:
-      "Professional corporate event planning in Chennai. Conferences, product launches, award ceremonies, and team-building events by City Heights Events.",
+      "Professional day trading coaching in Chennai. Learn intraday setups, risk management, and trading psychology with Prime Strike.",
     intro:
-      "When your brand's reputation is on the line, you need an event partner you can trust. City Heights Events delivers polished corporate events in Chennai — from intimate board meetings and product launches to large-scale conferences and award ceremonies. We handle the logistics, production, and coordination so your team can focus on the business.",
+      "Day trading requires speed, discipline, and a clear plan. Our Day Trading Academy in Chennai provides a structured curriculum to help you develop intraday setups, understand order flows, and maintain strict risk controls.",
     whatWeOffer: [
-      "Conference and seminar planning",
-      "Product launch events with media coordination",
-      "Annual award ceremonies and gala dinners",
-      "Team-building events and offsites",
-      "Exhibition and trade show management",
-      "Corporate entertainment and artist booking",
+      "Intraday chart setups and price patterns",
+      "Managing leverage and margin requirements",
+      "Pre-market analysis and stock selection checklists",
+      "Understanding bid-ask spreads and order books",
+      "Trading psychology exercises to control panic",
     ],
     whyChooseUs:
-      "We understand the precision corporate events demand. From branded stage design and AV production to seamless registration and guest management, our team has delivered events for companies across Chennai's IT corridor, automobile industry, and financial sector.",
+      "We emphasize trading psychology. Having a good setup is only 20% of the game; the other 80% is execution discipline, which we build through journal reviews.",
     popularVenues: [
-      "Chennai Trade Centre, Nandambakkam",
-      "ITC Grand Chola, Guindy",
-      "Hilton Chennai",
-      "Hyatt Regency, Teynampet",
-      "Taj Connemara, Binny Road",
+      "Live Intraday Webinar Rooms",
+      "Nungambakkam office trading meetups",
+      "Online Interactive Q&A sessions",
     ],
     faqs: [
       {
-        q: "Can you manage a corporate conference for 500+ attendees?",
-        a: "Yes. We have managed corporate events ranging from 50-person board meetings to 2,000+ attendee conferences. Our team handles venue sourcing, AV production, registration, catering, and on-site management.",
+        q: "Can I day trade while working a full-time job?",
+        a: "It is difficult but possible. We teach specific setups that form in the first hour of the market, allowing you to plan your trades early.",
       },
       {
-        q: "Do you provide branding and stage design for corporate events?",
-        a: "Absolutely. We offer complete branded stage design, backdrops, signage, and digital screen content. We work with your brand guidelines to ensure a professional and cohesive look.",
+        q: "How much capital do I need to start day trading?",
+        a: "We recommend starting with a small capital (e.g., ₹10,000) to practice execution and discipline before committing larger amounts.",
       },
     ],
     relatedSlugs: [
-      "product-launch-event-planners-chennai",
-      "event-planners-nungambakkam",
-      "birthday-party-organisers-chennai",
+      "trading-classes-in-chennai",
+      "technical-analysis-webinars",
+      "forex-trading-course-chennai",
     ],
-    eventType: "Corporate Event",
+    eventType: "Day Trading",
     location: "Chennai",
   },
   {
-    slug: "product-launch-event-planners-chennai",
-    title: "Product Launch Event Planners in Chennai | City Heights Events",
-    h1: "Product Launch Event Planners in Chennai",
+    slug: "share-market-classes-nungambakkam",
+    title: "Share Market Classes in Nungambakkam, Chennai | Prime Strike",
+    h1: "Share Market Classes in Nungambakkam",
     metaDescription:
-      "Plan a memorable product launch in Chennai with City Heights Events. We create buzz-worthy launch events with staging, media, and entertainment.",
+      "Learn share trading in Nungambakkam. Prime Strike offers stock market classes and mentorship at our Jagannathan Street office.",
     intro:
-      "A great product deserves a great launch. City Heights Events specialises in creating high-impact product launch events in Chennai that generate buzz and leave a lasting impression. Whether you're unveiling a new automobile, tech product, or lifestyle brand, we design immersive experiences that put your product in the spotlight.",
+      "Looking for structured stock market coaching in Nungambakkam? Our primary office is at No. 10, Jagannathan Street. We conduct interactive webinars online and host in-person weekend meetups for student portfolio reviews and strategy discussions right here in central Chennai.",
     whatWeOffer: [
-      "Product unveil staging and dramatic reveal concepts",
-      "Media and press coordination",
-      "Influencer and VIP guest management",
-      "Live streaming and social media integration",
-      "Branded venue transformation",
-      "Post-event media coverage and reporting",
+      "Interactive webinars on stock market basics",
+      "In-person weekend mentorship at Nungambakkam",
+      "Option strategy workshops and trading setups",
+      "Practical exercises in chart analysis",
+      "Face-to-face feedback on your trade logs",
     ],
     whyChooseUs:
-      "With Jabes Amirtharaj's background in both the automotive industry and event management, City Heights brings a unique understanding of product positioning and presentation. We know how to build anticipation and deliver a reveal that gets people talking.",
+      "Our central location makes it easy to meet in person. If you are stuck with a trading concept or want your trade journal audited, you can schedule an appointment at our Nungambakkam office.",
     popularVenues: [
-      "Phoenix MarketCity, Velachery",
-      "Express Avenue Mall, Royapettah",
-      "ITC Grand Chola, Guindy",
-      "VGP Golden Beach Resort, ECR",
-      "Crowne Plaza, Adyar",
+      "Nungambakkam Office Meeting Rooms",
+      "Live Webinar Broadcast System",
+      "Central Chennai Trading Meetups",
     ],
     faqs: [
       {
-        q: "How far in advance should we plan a product launch?",
-        a: "We recommend a minimum of 4-6 weeks for a standard launch event. For large-scale launches with media involvement, 8-12 weeks gives us time to maximise press coverage and VIP attendance.",
+        q: "Where is your office in Nungambakkam located?",
+        a: "We are at No. 10, Jagannathan Street, Nungambakkam, Chennai. You can drop in for weekend portfolio reviews by booking an appointment at +91 98842 20242.",
       },
       {
-        q: "Can you handle automobile launch events?",
-        a: "Yes — our founder Jabes Amirtharaj has extensive experience in the automobile industry and has managed car launch events. We understand the specific requirements for vehicle staging, lighting, and guest experience.",
+        q: "Do you teach share market classes in Tamil?",
+        a: "Yes, our webinars and mentorship reviews are conducted in both Tamil and English to make learning comfortable for everyone.",
       },
     ],
     relatedSlugs: [
-      "corporate-event-planners-chennai",
-      "event-planners-nungambakkam",
-      "concert-organisers-chennai",
+      "trading-classes-in-chennai",
+      "stock-market-training-chennai",
+      "day-trading-academy-chennai",
     ],
-    eventType: "Product Launch",
-    location: "Chennai",
-  },
-
-  // ─── Birthday & private ────────────────────────────────
-  {
-    slug: "birthday-party-organisers-chennai",
-    title: "Birthday Party Organisers in Chennai | City Heights Events",
-    h1: "Birthday Party Organisers in Chennai",
-    metaDescription:
-      "Plan the perfect birthday party in Chennai. City Heights Events organises themed parties for kids and adults with decor, entertainment, and catering.",
-    intro:
-      "Make every birthday unforgettable. City Heights Events organises birthday celebrations across Chennai — from magical themed parties for kids to elegant milestone celebrations for adults. Whether it's a 1st birthday, sweet 16, or a grand 50th celebration, we bring your party vision to life with creative themes, stunning decor, and seamless coordination.",
-    whatWeOffer: [
-      "Themed party design for kids and adults",
-      "Custom cake and dessert table coordination",
-      "Entertainment — magicians, DJs, live performers",
-      "Balloon and floral decor installations",
-      "Photography and videography",
-      "Venue selection and catering management",
-    ],
-    whyChooseUs:
-      "We have organised hundreds of birthday celebrations across Chennai, from intimate home parties to grand ballroom affairs. Our team handles everything so you can enjoy the party as a guest at your own celebration.",
-    popularVenues: [
-      "Forum Vijaya Mall, Vadapalani",
-      "VGP Universal Kingdom, ECR",
-      "The Park, Anna Salai",
-      "Savera Hotel, Mylapore",
-      "Private farmhouses, ECR",
-    ],
-    faqs: [
-      {
-        q: "How much does a birthday party organiser cost in Chennai?",
-        a: "Birthday party packages start from ₹15,000 for basic decor and coordination. Themed parties with entertainment, custom decor, and catering management typically range from ₹40,000 to ₹2,00,000+ depending on the guest count and venue.",
-      },
-      {
-        q: "Can you organise a surprise birthday party?",
-        a: "Yes, surprise parties are one of our specialities. We coordinate discreetly with your family or friends to set up the venue and manage guest arrivals without the birthday person knowing.",
-      },
-    ],
-    relatedSlugs: [
-      "wedding-planners-in-chennai",
-      "event-planners-anna-nagar",
-      "event-planners-nungambakkam",
-    ],
-    eventType: "Birthday Party",
-    location: "Chennai",
-  },
-
-  // ─── Concerts & entertainment ──────────────────────────
-  {
-    slug: "concert-organisers-chennai",
-    title: "Concert Organisers in Chennai | City Heights Events",
-    h1: "Concert Organisers in Chennai",
-    metaDescription:
-      "Professional concert and live event organisation in Chennai. City Heights Events manages staging, sound, artist booking, and crowd management.",
-    intro:
-      "From intimate acoustic sets to large-scale music festivals, City Heights Events has the production expertise to deliver concerts in Chennai that sound incredible and run smoothly. Our team manages artist booking, sound and lighting production, staging, crowd management, and permitting — every detail that makes a concert successful.",
-    whatWeOffer: [
-      "Artist booking and talent coordination",
-      "Professional sound and lighting production",
-      "Stage design and construction",
-      "Crowd management and security coordination",
-      "Ticketing and entry management",
-      "Permitting and compliance",
-    ],
-    whyChooseUs:
-      "We have the vendor network and technical expertise to deliver concert-quality production. From 200-person club shows to 5,000+ open-air festivals, our team scales to meet the demands of any live music event in Chennai.",
-    popularVenues: [
-      "YMCA Grounds, Nandanam",
-      "Kalaivanar Arangam",
-      "Sir Mutha Venkatasubba Rao Concert Hall",
-      "VGP Golden Beach Resort, ECR",
-      "Island Grounds",
-    ],
-    faqs: [
-      {
-        q: "Can you book artists and performers for concerts in Chennai?",
-        a: "Yes, we handle the full artist booking process including negotiation, contracting, rider management, and backstage logistics. We have connections with booking agents across India.",
-      },
-      {
-        q: "What permits are needed for outdoor concerts in Chennai?",
-        a: "Outdoor concerts in Chennai require police permissions, fire safety clearance, noise pollution permits, and sometimes municipal corporation approvals depending on the venue. We handle the entire permitting process.",
-      },
-    ],
-    relatedSlugs: [
-      "product-launch-event-planners-chennai",
-      "corporate-event-planners-chennai",
-      "event-planners-nungambakkam",
-    ],
-    eventType: "Concert",
-    location: "Chennai",
-  },
-
-  // ─── Location-specific ─────────────────────────────────
-  {
-    slug: "event-planners-nungambakkam",
-    title: "Event Planners in Nungambakkam, Chennai | City Heights Events",
-    h1: "Event Planners in Nungambakkam",
-    metaDescription:
-      "Local event planning company in Nungambakkam, Chennai. City Heights Events plans weddings, corporate events, and private parties. Office at Jagannathan Street.",
-    intro:
-      "Looking for an event planner right in your neighbourhood? City Heights Events is based in Nungambakkam with our office at No. 10, Jagannathan Street. As your local event planning partner, we know the area's best venues, vendors, and logistics inside out. Whether you're planning a wedding, corporate event, or private celebration, our Nungambakkam team is ready to help.",
-    whatWeOffer: [
-      "Full-service event planning and coordination",
-      "Wedding and reception management",
-      "Corporate events and conferences",
-      "Birthday and milestone celebrations",
-      "Venue sourcing across central Chennai",
-      "In-person consultations at our Nungambakkam office",
-    ],
-    whyChooseUs:
-      "Being based in the heart of Chennai at Nungambakkam gives us unmatched access to the city's top venues — Taj Coromandel, Courtyard by Marriott, and The Park are all minutes from our office. Drop by for a face-to-face consultation anytime.",
-    popularVenues: [
-      "Taj Coromandel, Nungambakkam",
-      "Courtyard by Marriott, Nungambakkam",
-      "The Park, Anna Salai",
-      "Hyatt Regency, Teynampet",
-      "Taj Club House, Mount Road",
-    ],
-    faqs: [
-      {
-        q: "Where is your Nungambakkam office?",
-        a: "Our office is at No. 10, Jagannathan Street, Nungambakkam, Chennai. You can visit us for a face-to-face consultation during business hours, or call us at +91 98842 20242 to schedule an appointment.",
-      },
-      {
-        q: "Do you only serve the Nungambakkam area?",
-        a: "No, we serve all of Chennai and surrounding areas. Our Nungambakkam office is our headquarters, but we plan and execute events across the city — from ECR to Anna Nagar and beyond.",
-      },
-    ],
-    relatedSlugs: [
-      "event-planners-anna-nagar",
-      "wedding-planners-in-chennai",
-      "corporate-event-planners-chennai",
-    ],
-    eventType: "Event Planning",
+    eventType: "Share Market Class",
     location: "Nungambakkam, Chennai",
   },
   {
-    slug: "event-planners-anna-nagar",
-    title: "Event Planners in Anna Nagar, Chennai | City Heights Events",
-    h1: "Event Planners in Anna Nagar",
+    slug: "forex-trading-course-chennai",
+    title: "Forex Trading Course in Chennai | Prime Strike",
+    h1: "Forex Trading Course in Chennai",
     metaDescription:
-      "Trusted event planning services in Anna Nagar, Chennai. City Heights Events plans weddings, parties, and corporate events across North Chennai.",
+      "Learn currency and forex trading in Chennai. Master price action, global macro analysis, and risk controls via webinars.",
     intro:
-      "Anna Nagar is one of Chennai's most vibrant residential areas, and City Heights Events is proud to serve the community with premium event planning services. From wedding receptions at Anna Nagar's top banquet halls to birthday celebrations and corporate gatherings, our team brings the same level of expertise and care to every event in the neighbourhood.",
+      "The currency market operates 24 hours a day. Our forex trading course teaches you how to trade major currency pairs and USDINR contracts systematically. Learn to analyze interest rate decisions, global macro events, and price structures.",
     whatWeOffer: [
-      "Wedding and engagement planning",
-      "Birthday and anniversary celebrations",
-      "Corporate events and team outings",
-      "Housewarming and pooja ceremonies",
-      "Venue sourcing in Anna Nagar and North Chennai",
-      "Decor, catering, and entertainment coordination",
+      "Understanding currency pairs and pip calculations",
+      "Trading USDINR and cross-currency contracts",
+      "Analyzing global economic calendars and news events",
+      "Risk management setups for overnight positions",
+      "Using leverage responsibly in currency trading",
     ],
     whyChooseUs:
-      "With our second office at Kolathur (Water Canal Road), we have strong vendor relationships across North Chennai. We know the best venues, caterers, and decorators in the Anna Nagar, Mogappair, and Ambattur belt.",
+      "We focus on exchange-traded currency derivatives, ensuring you trade legally and safely on Indian exchanges like NSE and BSE.",
     popularVenues: [
-      "Hotel Ashoka, Anna Nagar",
-      "GRT Grand, T. Nagar",
-      "Residency Towers, T. Nagar",
-      "Hotel Palmyra Grand, Anna Nagar",
-      "Convention centres along Inner Ring Road",
+      "Live Evening Webinars",
+      "Online Interactive Discussion Rooms",
+      "Weekend Macro Review Webinars",
     ],
     faqs: [
       {
-        q: "Do you have an office in Anna Nagar?",
-        a: "Our North Chennai office is at Water Canal Road, Kolathur — a short drive from Anna Nagar. We also offer home consultations across Anna Nagar. Call us at +91 98842 20242 to schedule a visit.",
+        q: "Is forex trading legal in India?",
+        a: "Yes, trading currency pairs that are benchmarked against the Indian Rupee (like USDINR, EURINR, GBPINR) is legal on recognized Indian exchanges like NSE and BSE.",
       },
       {
-        q: "What types of events do you plan in Anna Nagar?",
-        a: "We plan all types of events — weddings, receptions, birthday parties, corporate events, housewarming ceremonies, and more. Our team adapts to the specific needs and cultural preferences of each client.",
+        q: "What are the timings for currency trading?",
+        a: "In India, currency derivatives are traded from 9:00 AM to 5:00 PM, which is convenient for working professionals.",
       },
     ],
     relatedSlugs: [
-      "event-planners-nungambakkam",
-      "birthday-party-organisers-chennai",
-      "wedding-planners-in-chennai",
+      "trading-classes-in-chennai",
+      "day-trading-academy-chennai",
+      "technical-analysis-webinars",
     ],
-    eventType: "Event Planning",
-    location: "Anna Nagar, Chennai",
-  },
-  {
-    slug: "event-planners-ecr-chennai",
-    title: "Event Planners on ECR, Chennai | City Heights Events",
-    h1: "Event Planners on East Coast Road (ECR)",
-    metaDescription:
-      "Plan beach events and destination celebrations on ECR, Chennai. City Heights Events organises weddings, parties, and corporate retreats on East Coast Road.",
-    intro:
-      "East Coast Road is Chennai's go-to destination for beach weddings, resort celebrations, and outdoor events. City Heights Events has extensive experience organising events along ECR — from intimate beach ceremonies to large-scale resort gatherings. The stunning coastal setting combined with our production expertise creates events that are truly unforgettable.",
-    whatWeOffer: [
-      "Beach and resort wedding planning",
-      "Outdoor event production and staging",
-      "Corporate retreats and offsite management",
-      "Beach party and festival organisation",
-      "Permit management for coastal events",
-      "Weather contingency planning",
-    ],
-    whyChooseUs:
-      "ECR events have unique logistical challenges — weather, permits, generator backup, and guest transportation. We have managed dozens of events along the coast and know how to plan for every contingency while keeping the beachside magic intact.",
-    popularVenues: [
-      "VGP Golden Beach Resort, ECR",
-      "Mahabalipuram Beach Resort",
-      "InterContinental Chennai Mahabalipuram",
-      "Radisson Blu Resort Temple Bay",
-      "Private beach villas, ECR",
-    ],
-    faqs: [
-      {
-        q: "Is it possible to have a beach wedding on ECR?",
-        a: "Yes, beach weddings are very popular on ECR. We handle the permitting, tent and mandap setup, generator and lighting, and all logistics for a beautiful coastal ceremony. We also prepare weather backup plans.",
-      },
-      {
-        q: "What about transport for guests to ECR venues?",
-        a: "We coordinate guest transportation including luxury bus services, car pools, and even shuttle services from Chennai city to ECR venues. This is included in our full-service planning packages.",
-      },
-    ],
-    relatedSlugs: [
-      "wedding-planners-in-chennai",
-      "concert-organisers-chennai",
-      "birthday-party-organisers-chennai",
-    ],
-    eventType: "Event Planning",
-    location: "ECR, Chennai",
-  },
-
-  // ─── Engagement ────────────────────────────────────────
-  {
-    slug: "engagement-ceremony-planners-chennai",
-    title: "Engagement Ceremony Planners in Chennai | City Heights Events",
-    h1: "Engagement Ceremony Planners in Chennai",
-    metaDescription:
-      "Beautiful engagement ceremony planning in Chennai. City Heights Events creates elegant ring ceremonies with stunning decor and coordination.",
-    intro:
-      "The engagement ceremony marks the beginning of your wedding journey, and it deserves to be celebrated in style. City Heights Events plans elegant engagement ceremonies across Chennai — from intimate family gatherings to grand ring ceremonies with hundreds of guests. We handle the decor, photography, entertainment, and coordination to make your engagement as special as your wedding day.",
-    whatWeOffer: [
-      "Ring ceremony stage and decor design",
-      "Floral and lighting arrangements",
-      "Photography and videography coordination",
-      "Catering and refreshment management",
-      "Guest coordination and event flow",
-      "Cultural ceremony coordination",
-    ],
-    whyChooseUs:
-      "We understand that engagements in Chennai come with specific cultural customs and family expectations. Our team is experienced in coordinating traditional Tamil engagements, Christian ceremonies, and contemporary celebrations with equal attention to detail.",
-    popularVenues: [
-      "Hotel Savera, Mylapore",
-      "Taj Coromandel, Nungambakkam",
-      "GRT Grand, T. Nagar",
-      "The Raintree, St. Mary's Road",
-      "Sterling Mac Hotel, Anna Nagar",
-    ],
-    faqs: [
-      {
-        q: "How much does an engagement ceremony planner cost in Chennai?",
-        a: "Engagement ceremony planning starts from ₹25,000 for basic decor and coordination. Packages with elaborate stage design, floral installations, and entertainment typically range from ₹50,000 to ₹1,50,000.",
-      },
-      {
-        q: "Can you plan a combined engagement and reception event?",
-        a: "Yes, combined engagement-reception events are increasingly popular. We design the event flow to accommodate both ceremonies seamlessly, often with a stage transformation between segments.",
-      },
-    ],
-    relatedSlugs: [
-      "wedding-planners-in-chennai",
-      "wedding-reception-organisers-chennai",
-      "wedding-decorators-in-chennai",
-    ],
-    eventType: "Engagement Ceremony",
+    eventType: "Forex Course",
     location: "Chennai",
+  },
+  {
+    slug: "algo-trading-webinars",
+    title: "Algo Trading Webinars | Prime Strike",
+    h1: "Algo Trading Webinars",
+    metaDescription:
+      "Learn systematic trading and algorithmic execution. Prime Strike teaches backtesting, API connection, and automated rules online.",
+    intro:
+      "Remove emotions from your trading by automating your rules. Our algorithmic trading webinars show you how to code basic setups, backtest them against historical data, and connect them to your broker's API for hands-free execution.",
+    whatWeOffer: [
+      "Python basics for financial data analysis",
+      "Connecting to broker APIs for real-time data and order placement",
+      "Backtesting trading strategies against historical charts",
+      "Implementing risk limits and circuit breakers in code",
+      "Cloud deployment for uninterrupted systematic trading",
+    ],
+    whyChooseUs:
+      "We explain coding step-by-step. Even if you do not have a software background, we show you how to use visual builders and simple Python scripts to automate your setups.",
+    popularVenues: [
+      "Interactive Webinar Platforms",
+      "API Testing Rooms",
+      "Code Repository Sharing Portals",
+    ],
+    faqs: [
+      {
+        q: "Do I need coding experience to learn algo trading?",
+        a: "No. Our webinars start with the absolute basics of Python variables and loops, focusing specifically on what is needed for trading API connections.",
+      },
+      {
+        q: "Do you supply ready-made profitable algo bots?",
+        a: "No. We teach you how to write and test your own rules. We believe that using unverified third-party bots is dangerous for your capital.",
+      },
+    ],
+    relatedSlugs: [
+      "options-trading-course-online",
+      "technical-analysis-webinars",
+      "day-trading-academy-chennai",
+    ],
+    eventType: "Algo Trading",
+    location: "Online",
   },
 ];
 

@@ -31,7 +31,7 @@ function markDismissed() {
   }
 }
 
-const whatsappUrl = `https://wa.me/${SITE_WHATSAPP.replace(/[^0-9]/g, "")}?text=${encodeURIComponent("Hi, I'd like to enquire about event planning.")}`;
+const whatsappUrl = `https://wa.me/${SITE_WHATSAPP.replace(/[^0-9]/g, "")}?text=${encodeURIComponent("Hi, I'd like to enquire about the trading classes.")}`;
 const phoneUrl = `tel:${SITE_PHONE}`;
 
 export function CTAPopup() {
@@ -144,7 +144,7 @@ export function CTAPopup() {
             aria-label={
               isExit
                 ? "Before you go — get in touch"
-                : "Get in touch with City Heights Events"
+                : "Get in touch with Prime Strike"
             }
             className="fixed z-[101] w-[calc(100%-2rem)] max-w-md
               bottom-4 left-1/2 -translate-x-1/2
@@ -180,7 +180,7 @@ export function CTAPopup() {
               <p className="text-sm text-white/40 leading-relaxed mb-8">
                 {isExit
                   ? `Reach out to ${FOUNDER_NAME} directly — no forms, no waiting. We respond instantly.`
-                  : `Chat with ${FOUNDER_NAME} on WhatsApp or give us a call. We\u2019ll help you plan the perfect event in Chennai.`}
+                  : `Chat with ${FOUNDER_NAME} on WhatsApp or give us a call. We\u2019ll help you choose the right course in Chennai.`}
               </p>
 
               {/* CTAs */}

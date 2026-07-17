@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllPseoSlugs } from "@/lib/pseo-data";
 
-const BASE = "https://www.cityheights.com";
+const BASE = "https://www.primestrike.in";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
