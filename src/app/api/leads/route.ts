@@ -15,7 +15,7 @@ export async function POST(request: Request) {
     }
 
     // 1. Insert into Supabase Leads table
-    const { data, error: dbError } = await supabase
+    const { error: dbError } = await supabase
       .from("leads")
       .insert([
         {
@@ -28,8 +28,7 @@ export async function POST(request: Request) {
           notes: notes || "",
           status: "new",
         },
-      ])
-      .select();
+      ]);
 
     if (dbError) {
       console.error("Database error inserting lead:", dbError);
@@ -123,7 +122,7 @@ export async function POST(request: Request) {
       console.error("Mailer error sending lead confirmation:", mailError);
     }
 
-    return NextResponse.json({ success: true, data }, { status: 200 });
+    return NextResponse.json({ success: true }, { status: 200 });
 
   } catch (error: any) {
     console.error("Server API error in POST /api/leads:", error);
