@@ -14,12 +14,14 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { NAV_LINKS, SITE_NAME } from "@/lib/constants";
+import { useAuth } from "@/context/AuthContext";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
   const { scrollY } = useScroll();
+  const { user, profile, loading, signOut } = useAuth();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setScrolled(latest > 20);
@@ -96,19 +98,50 @@ export function Navbar() {
         </ul>
 
         {/* ── Desktop CTA ── */}
-        <div className="hidden md:block">
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ type: "spring", stiffness: 400, damping: 25 }}
-          >
-            <Button
-              asChild
-              className="rounded-full px-6 h-10 font-medium bg-gold text-gold-foreground hover:bg-gold/90 hover:shadow-lg hover:shadow-gold/10 transition-shadow duration-300"
-            >
-              <Link href="/contact">Get in Touch</Link>
-            </Button>
-          </motion.div>
+        <div className="hidden md:flex items-center gap-4 relative z-10">
+          {loading ? (
+            <div className="h-10 w-28 bg-white/5 border border-white/10 rounded-full animate-pulse" />
+          ) : user ? (
+            <div className="flex items-center gap-3">
+              <Button
+                asChild
+                className="rounded-full px-5 h-10 font-medium bg-white/10 text-white hover:bg-white/20 border border-white/10 transition-all text-sm"
+              >
+                <Link href={profile?.role === "admin" ? "/admin" : "/dashboard"}>
+                  {profile?.role === "admin" ? "Admin Panel" : "Dashboard"}
+                </Link>
+              </Button>
+              <Button
+                onClick={signOut}
+                variant="ghost"
+                className="rounded-full px-4 h-10 font-medium text-white/50 hover:text-white/80 hover:bg-white/5 transition-all text-xs"
+              >
+                Sign Out
+              </Button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-3">
+              <Button
+                asChild
+                variant="outline"
+                className="rounded-full px-5 h-10 font-medium border-gold/45 text-gold hover:bg-gold/5 hover:text-gold transition-all text-sm"
+              >
+                <Link href="/survey">Free Assessment</Link>
+              </Button>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              >
+                <Button
+                  asChild
+                  className="rounded-full px-5 h-10 font-medium bg-gold text-gold-foreground hover:bg-gold/90 hover:shadow-lg hover:shadow-gold/10 transition-shadow duration-300 text-sm"
+                >
+                  <Link href="/login">Student Portal</Link>
+                </Button>
+              </motion.div>
+            </div>
+          )}
         </div>
 
         {/* ── Mobile Menu ── */}
@@ -173,6 +206,33 @@ export function Navbar() {
                       </motion.div>
                     );
                   })}
+                  {user && (
+                    <motion.div
+                      key="/dashboard-dynamic"
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{
+                        delay: 0.1 + NAV_LINKS.length * 0.05,
+                        duration: 0.3,
+                        ease: "easeOut",
+                      }}
+                    >
+                      <SheetClose
+                        render={
+                          <Link
+                            href={profile?.role === "admin" ? "/admin" : "/dashboard"}
+                            className={`text-xl font-medium transition-colors duration-200 block ${
+                              pathname === "/dashboard" || pathname === "/admin"
+                                ? "text-gold"
+                                : "text-white/40 hover:text-white"
+                            }`}
+                          >
+                            {profile?.role === "admin" ? "Admin Panel" : "Dashboard"}
+                          </Link>
+                        }
+                      />
+                    </motion.div>
+                  )}
                 </nav>
 
                 {/* Mobile CTA */}
@@ -180,21 +240,62 @@ export function Navbar() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.35, duration: 0.3 }}
-                  className="mt-auto pt-10"
+                  className="mt-auto pt-10 flex flex-col gap-3"
                 >
-                  <SheetClose
-                    render={
-                      <Button
-                        asChild
-                        className="w-full h-12 rounded-lg bg-gold text-gold-foreground hover:bg-gold/90 font-medium text-base group"
-                      >
-                        <Link href="/contact">
-                          Start Learning
-                          <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                        </Link>
-                      </Button>
-                    }
-                  />
+                  {loading ? (
+                    <div className="h-12 w-full bg-white/5 border border-white/10 rounded-lg animate-pulse" />
+                  ) : user ? (
+                    <Button
+                      onClick={() => {
+                        signOut();
+                        setMobileOpen(false);
+                      }}
+                      variant="outline"
+                      className="w-full h-12 rounded-lg border-white/10 text-white hover:bg-white/5 font-medium text-base"
+                    >
+                      Sign Out
+                    </Button>
+                  ) : (
+                    <>
+                      <SheetClose
+                        render={
+                          <Button
+                            asChild
+                            className="w-full h-12 rounded-lg bg-gold text-gold-foreground hover:bg-gold/90 font-medium text-base group"
+                          >
+                            <Link href="/survey">
+                              Free Assessment
+                              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                          </Button>
+                        }
+                      />
+                      <div className="grid grid-cols-2 gap-3">
+                        <SheetClose
+                          render={
+                            <Button
+                              asChild
+                              variant="outline"
+                              className="w-full h-11 rounded-lg border-white/10 text-white hover:bg-white/5 font-medium text-sm"
+                            >
+                              <Link href="/login">Student Portal</Link>
+                            </Button>
+                          }
+                        />
+                        <SheetClose
+                          render={
+                            <Button
+                              asChild
+                              variant="outline"
+                              className="w-full h-11 rounded-lg border-white/10 text-white hover:bg-white/5 font-medium text-sm"
+                            >
+                              <Link href="/contact">Contact Us</Link>
+                            </Button>
+                          }
+                        />
+                      </div>
+                    </>
+                  )}
 
                   <p className="text-center text-white/20 text-xs mt-6 tracking-wide">
                     Premium Trading Academy

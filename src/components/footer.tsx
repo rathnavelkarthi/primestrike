@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Instagram, MapPin, Mail, Phone, Facebook } from "lucide-react";
+import { Instagram, MapPin, Mail, Phone, Facebook, Send } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import {
   SITE_NAME,
@@ -28,14 +28,14 @@ export function Footer() {
               {SITE_NAME}
             </h3>
             <p className="text-sm text-background/60 leading-relaxed mb-2">
-              Premium event management in Chennai by {FOUNDER_NAME}.
+              Premium stock market and options trading academy in Chennai by {FOUNDER_NAME}.
             </p>
             <p className="text-sm text-background/40 leading-relaxed mb-6">
-              Weddings, corporate events, concerts & festivals.
+              Learn options hedging, price action, and systematic trading to build confidence.
             </p>
             <div className="flex gap-3">
               {SOCIAL_LINKS.map(({ label, href }: { label: string; href: string }) => {
-                const Icon = label === "Instagram" ? Instagram : Facebook;
+                const Icon = label === "Instagram" ? Instagram : label === "Telegram" ? Send : Facebook;
                 return (
                   <a
                     key={label}

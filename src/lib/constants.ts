@@ -56,8 +56,8 @@ export const SITE_DESCRIPTION =
   "Interactive trading webinars and online classes in Chennai. Master options trading, technical analysis, and stock market strategies with founder Saranya.";
 export const SITE_URL = "https://www.primestrike.in";
 export const SITE_EMAIL = "contact@primestrike.in";
-export const SITE_PHONE = "+91 98842 20242";
-export const SITE_WHATSAPP = "+91 98842 20242";
+export const SITE_PHONE = "+91 95002 98631";
+export const SITE_WHATSAPP = "+91 95002 98631";
 export const EST_YEAR = "2024";
 export const FOUNDER_NAME = "Saranya";
 
@@ -80,11 +80,11 @@ export const OFFICES: Office[] = [
 export const SOCIAL_LINKS = [
   {
     label: "Instagram",
-    href: "https://www.instagram.com/primestrike_trading/",
+    href: "https://www.instagram.com/prime__strike?igsh=MTBvZTkzdzFjNXA2cw%3D%3D&utm_source=qr",
   },
   {
-    label: "Facebook",
-    href: "https://www.facebook.com/primestriketrading/",
+    label: "Telegram",
+    href: "https://t.me/prime_strik",
   },
 ];
 

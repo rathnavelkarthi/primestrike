@@ -4,6 +4,7 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { CTAPopup } from "@/components/cta-popup";
 import { WhatsAppFAB } from "@/components/whatsapp-fab";
+import { AuthProvider } from "@/context/AuthContext";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -55,12 +56,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${poppins.variable} ${inter.variable}`}>
       <body className="font-[family-name:var(--font-inter)] antialiased">
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-        <CTAPopup />
-        <WhatsAppFAB />
+        <AuthProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+          <CTAPopup />
+          <WhatsAppFAB />
+        </AuthProvider>
       </body>
     </html>
   );
 }
+
