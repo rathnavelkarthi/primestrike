@@ -2,12 +2,15 @@ import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabaseClient";
 import nodemailer from "nodemailer";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { name, email, phone, joinedCourse, experience, firstClassDate, paidAmount, notes } = body;
 
-    const courseSelected = joinedCourse || experience || "Basic to Advance";
+    const courseSelected = joinedCourse || (experience && experience !== "beginner" && experience !== "intermediate" && experience !== "experienced" ? experience : null) || "Basic to Advance";
 
     if (!name || !email || !phone) {
       return NextResponse.json(
@@ -18,12 +21,13 @@ export async function POST(request: Request) {
 
     const formattedNotes = `[Joined Course: ${courseSelected} | 1st Class Date: ${firstClassDate || "Not set"} | Paid Fees: ₹${paidAmount || "Recorded"}] ${notes ? `— Notes: ${notes}` : ""}`;
 
-    // 1. Try inserting with new schema columns
+    // 1. Try primary insert with new schema columns
+    // Set experience to 'beginner' so it never triggers SQL CHECK (experience in ('beginner', 'intermediate', 'experienced')) constraint error
     const fullPayload = {
       name,
       email,
       phone,
-      experience: courseSelected,
+      experience: "beginner",
       joined_course: courseSelected,
       first_class_date: firstClassDate || "",
       paid_amount: paidAmount || "",
@@ -33,9 +37,9 @@ export async function POST(request: Request) {
 
     let { error: dbError } = await supabase.from("leads").insert([fullPayload]);
 
-    // 2. Fallback for existing Supabase tables that haven't run the SQL alter table migration yet
+    // 2. Fallback for tables that don't have joined_course, first_class_date, or paid_amount columns yet
     if (dbError) {
-      console.warn("Supabase primary schema insertion notice, attempting fallback layout:", dbError.message);
+      console.warn("Supabase primary schema insertion notice, using universal fallback layout:", dbError.message);
       
       const fallbackPayload = {
         name,

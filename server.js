@@ -2,8 +2,8 @@ const { createServer } = require('http');
 const { parse } = require('url');
 const next = require('next');
 
-const dev = false;
-const hostname = 'localhost';
+const dev = process.env.NODE_ENV !== 'production';
+const hostname = process.env.HOSTNAME || '0.0.0.0';
 const port = parseInt(process.env.PORT || '3000', 10);
 const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
@@ -16,7 +16,7 @@ app.prepare().then(() => {
     } catch (err) {
       console.error('Error occurred handling', req.url, err);
       res.statusCode = 500;
-      res.end('internal server error');
+      res.end('Internal Server Error');
     }
   })
     .once('error', (err) => {
