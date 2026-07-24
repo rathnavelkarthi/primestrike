@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { name, email, phone, joinedCourse, experience, firstClassDate, paidAmount, notes } = body;
 
-    const courseSelected = joinedCourse || (experience && experience !== "beginner" && experience !== "intermediate" && experience !== "experienced" ? experience : null) || "Basic to Advance";
+    const courseSelected = joinedCourse || "Basic to Advance";
 
     if (!name || !email || !phone) {
       return NextResponse.json(
@@ -19,10 +19,9 @@ export async function POST(request: Request) {
       );
     }
 
-    const formattedNotes = `[Joined Course: ${courseSelected} | 1st Class Date: ${firstClassDate || "Not set"} | Paid Fees: ₹${paidAmount || "Recorded"}] ${notes ? `— Notes: ${notes}` : ""}`;
+    const formattedNotes = `[Joined Course: ${courseSelected} | 1st Class Date: ${firstClassDate || "Not set"} | Paid Fees: ₹${paidAmount || "Recorded"}]${notes ? ` — Notes: ${notes}` : ""}`;
 
-    // 1. Try primary insert with new schema columns
-    // Set experience to 'beginner' so it never triggers SQL CHECK (experience in ('beginner', 'intermediate', 'experienced')) constraint error
+    // 1. Try inserting with new columns first
     const fullPayload = {
       name,
       email,
@@ -35,12 +34,14 @@ export async function POST(request: Request) {
       status: "joined",
     };
 
-    let { error: dbError } = await supabase.from("leads").insert([fullPayload]);
+    let insertOk = false;
+    const { error: dbError } = await supabase.from("leads").insert([fullPayload]);
 
-    // 2. Fallback for tables that don't have joined_course, first_class_date, or paid_amount columns yet
-    if (dbError) {
-      console.warn("Supabase primary schema insertion notice, using universal fallback layout:", dbError.message);
-      
+    if (!dbError) {
+      insertOk = true;
+    } else {
+      // 2. Fallback insert (table may not have new columns yet)
+      console.warn("Primary insert failed, trying fallback:", dbError.message);
       const fallbackPayload = {
         name,
         email,
@@ -49,112 +50,43 @@ export async function POST(request: Request) {
         notes: formattedNotes,
         status: "new",
       };
-
       const { error: fallbackError } = await supabase.from("leads").insert([fallbackPayload]);
-      
-      if (fallbackError) {
-        console.error("Database fallback error inserting lead:", fallbackError);
+      if (!fallbackError) {
+        insertOk = true;
+      } else {
+        console.error("Fallback insert also failed:", fallbackError);
         return NextResponse.json(
-          { error: "Failed to store registration details in Supabase database." },
+          { error: "Failed to save your registration. Please try again." },
           { status: 500 }
         );
       }
     }
 
-    // 3. Setup nodemailer transporter (Hostinger SMTP for primestrike.co.in)
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || "smtp.hostinger.com",
-      port: parseInt(process.env.SMTP_PORT || "465"),
-      secure: true, // true for port 465
-      auth: {
-        user: process.env.SMTP_USER || "contact@primestrike.co.in",
-        pass: process.env.SMTP_PASS || "Lmas@123",
-      },
+    // 3. Send email in background — don't let SMTP failures block the user response
+    // Return success immediately after DB insert, then fire-and-forget the email
+    const smtpHost = process.env.SMTP_HOST || "smtp.hostinger.com";
+    const smtpPort = parseInt(process.env.SMTP_PORT || "465");
+    const smtpUser = process.env.SMTP_USER || "contact@primestrike.co.in";
+    const smtpPass = process.env.SMTP_PASS || "LAms@12345";
+
+    const portalUrl = new URL(request.url).origin;
+
+    // Fire and forget — email sending runs async after we return the response
+    sendConfirmationEmail({
+      smtpHost,
+      smtpPort,
+      smtpUser,
+      smtpPass,
+      toEmail: email,
+      studentName: name,
+      courseSelected,
+      firstClassDate: firstClassDate || "To be scheduled",
+      paidAmount: paidAmount || "Recorded",
+      phone,
+      portalUrl,
+    }).catch((err) => {
+      console.error("Background email send failed:", err);
     });
-
-    const portalUrl = `${new URL(request.url).origin}`;
-    
-    // 4. Email Template (Black-Gold Theme)
-    const mailOptions = {
-      from: `"Prime Strike Trading Academy" <${process.env.SMTP_USER || "contact@primestrike.co.in"}>`,
-      to: email,
-      subject: `Welcome to Prime Strike — Enrollment Confirmed (${courseSelected})`,
-      html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <style>
-            body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #000000; color: #ffffff; margin: 0; padding: 0; }
-            .container { max-width: 600px; margin: 0 auto; background-color: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 12px; overflow: hidden; margin-top: 40px; margin-bottom: 40px; }
-            .header { background-color: #000000; text-align: center; padding: 30px 20px; border-bottom: 1px solid #1c1c1c; }
-            .header h1 { color: #ffffff; font-size: 26px; font-weight: 700; margin: 0; letter-spacing: -0.5px; }
-            .header h1 span { color: #d4af37; }
-            .content { padding: 40px 30px; line-height: 1.6; color: #cccccc; }
-            .content h2 { color: #ffffff; font-size: 20px; font-weight: 600; margin-top: 0; }
-            .badge { display: inline-block; background-color: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3); color: #d4af37; font-size: 11px; font-weight: 600; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; margin-bottom: 15px; }
-            .details-box { background-color: #111111; border: 1px solid #222222; border-radius: 8px; padding: 18px; margin: 20px 0; }
-            .details-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; }
-            .details-label { color: #888888; }
-            .details-val { color: #ffffff; font-weight: 600; }
-            .highlight { color: #d4af37; font-weight: 600; }
-            .cta-box { background-color: #121212; border: 1px solid #1c1c1c; border-radius: 8px; padding: 25px; margin: 25px 0; text-align: center; }
-            .button { display: inline-block; background-color: #d4af37; color: #000000; text-decoration: none; font-weight: bold; font-size: 14px; padding: 12px 30px; border-radius: 60px; margin-top: 10px; transition: background-color 0.2s; }
-            .social-links { text-align: center; margin-top: 20px; }
-            .social-btn { display: inline-block; border: 1px solid #1c1c1c; border-radius: 6px; padding: 8px 15px; text-decoration: none; font-size: 12px; color: #ffffff; background-color: #161616; margin: 0 5px; }
-            .footer { background-color: #000000; text-align: center; padding: 20px; font-size: 12px; color: #555555; border-top: 1px solid #1a1a1a; }
-            .footer a { color: #d4af37; text-decoration: none; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <h1>Prime<span>Strike</span></h1>
-            </div>
-            
-            <div class="content">
-              <h2>Thank you for registering, ${name}!</h2>
-              <div class="badge">Course Registration Received</div>
-              <p>
-                We have received your enrollment details for Prime Strike Academy. Our founder, <span class="highlight">Saranya</span>, and our team are excited to have you on board!
-              </p>
-
-              <div class="details-box">
-                <div class="details-row"><span class="details-label">Joined Course:</span> <span class="details-val">${courseSelected}</span></div>
-                <div class="details-row"><span class="details-label">First Class Date:</span> <span class="details-val">${firstClassDate || "To be scheduled"}</span></div>
-                <div class="details-row"><span class="details-label">Fees Paid Amount:</span> <span class="details-val">₹${paidAmount || "Recorded"}</span></div>
-                <div class="details-row"><span class="details-label">Phone Number:</span> <span class="details-val">${phone}</span></div>
-              </div>
-              
-              <div class="cta-box">
-                <p style="margin-top:0; color:#ffffff; font-weight:600;">Access your Student Portal</p>
-                <p style="font-size:13px; color:#888888; margin-bottom:15px;">Create or log into your student account on our website to access live session links and study resources.</p>
-                <a href="${portalUrl}/signup" class="button">Create Student Account</a>
-              </div>
-              
-              <h3 style="color:#ffffff; font-size:15px; font-weight:600; margin-top:30px; margin-bottom:10px;">Connect With Us:</h3>
-              <p style="font-size:13px; margin-top:0;">Follow us to receive daily charts, analysis, and trade setup alerts:</p>
-              <div class="social-links">
-                <a href="https://www.instagram.com/prime__strike?igsh=MTBvZTkzdzFjNXA2cw%3D%3D&utm_source=qr" class="social-btn">📸 Instagram</a>
-                <a href="https://t.me/prime_strik" class="social-btn">✈️ Telegram Channel</a>
-              </div>
-            </div>
-            
-            <div class="footer">
-              <p>&copy; ${new Date().getFullYear()} Prime Strike Academy. All Rights Reserved.</p>
-              <p>Email: <a href="mailto:contact@primestrike.co.in">contact@primestrike.co.in</a> | Phone: +91 95002 98631</p>
-            </div>
-          </div>
-        </body>
-        </html>
-      `,
-    };
-
-    // 5. Send confirmation email
-    try {
-      await transporter.sendMail(mailOptions);
-    } catch (mailError) {
-      console.error("Mailer error sending lead confirmation:", mailError);
-    }
 
     return NextResponse.json({ success: true }, { status: 200 });
 
@@ -165,4 +97,101 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
+}
+
+// Separate async function for email — runs independently so SMTP timeouts don't block the response
+async function sendConfirmationEmail(opts: {
+  smtpHost: string;
+  smtpPort: number;
+  smtpUser: string;
+  smtpPass: string;
+  toEmail: string;
+  studentName: string;
+  courseSelected: string;
+  firstClassDate: string;
+  paidAmount: string;
+  phone: string;
+  portalUrl: string;
+}) {
+  const transporter = nodemailer.createTransport({
+    host: opts.smtpHost,
+    port: opts.smtpPort,
+    secure: opts.smtpPort === 465,
+    auth: {
+      user: opts.smtpUser,
+      pass: opts.smtpPass,
+    },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 15000,
+  });
+
+  const mailOptions = {
+    from: `"Prime Strike Trading Academy" <${opts.smtpUser}>`,
+    to: opts.toEmail,
+    subject: `Welcome to Prime Strike — Enrollment Confirmed (${opts.courseSelected})`,
+    html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <style>
+          body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #000000; color: #ffffff; margin: 0; padding: 0; }
+          .container { max-width: 600px; margin: 0 auto; background-color: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 12px; overflow: hidden; margin-top: 40px; margin-bottom: 40px; }
+          .header { background-color: #000000; text-align: center; padding: 30px 20px; border-bottom: 1px solid #1c1c1c; }
+          .header h1 { color: #ffffff; font-size: 26px; font-weight: 700; margin: 0; letter-spacing: -0.5px; }
+          .header h1 span { color: #d4af37; }
+          .content { padding: 40px 30px; line-height: 1.6; color: #cccccc; }
+          .content h2 { color: #ffffff; font-size: 20px; font-weight: 600; margin-top: 0; }
+          .badge { display: inline-block; background-color: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3); color: #d4af37; font-size: 11px; font-weight: 600; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; margin-bottom: 15px; }
+          .details-box { background-color: #111111; border: 1px solid #222222; border-radius: 8px; padding: 18px; margin: 20px 0; }
+          .details-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; }
+          .details-label { color: #888888; }
+          .details-val { color: #ffffff; font-weight: 600; }
+          .highlight { color: #d4af37; font-weight: 600; }
+          .cta-box { background-color: #121212; border: 1px solid #1c1c1c; border-radius: 8px; padding: 25px; margin: 25px 0; text-align: center; }
+          .button { display: inline-block; background-color: #d4af37; color: #000000; text-decoration: none; font-weight: bold; font-size: 14px; padding: 12px 30px; border-radius: 60px; margin-top: 10px; }
+          .social-links { text-align: center; margin-top: 20px; }
+          .social-btn { display: inline-block; border: 1px solid #1c1c1c; border-radius: 6px; padding: 8px 15px; text-decoration: none; font-size: 12px; color: #ffffff; background-color: #161616; margin: 0 5px; }
+          .footer { background-color: #000000; text-align: center; padding: 20px; font-size: 12px; color: #555555; border-top: 1px solid #1a1a1a; }
+          .footer a { color: #d4af37; text-decoration: none; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <h1>Prime<span>Strike</span></h1>
+          </div>
+          <div class="content">
+            <h2>Thank you for registering, ${opts.studentName}!</h2>
+            <div class="badge">Course Registration Received</div>
+            <p>We have received your enrollment details for Prime Strike Academy. Our founder, <span class="highlight">Saranya</span>, and our team are excited to have you on board!</p>
+            <div class="details-box">
+              <div class="details-row"><span class="details-label">Joined Course:</span> <span class="details-val">${opts.courseSelected}</span></div>
+              <div class="details-row"><span class="details-label">First Class Date:</span> <span class="details-val">${opts.firstClassDate}</span></div>
+              <div class="details-row"><span class="details-label">Fees Paid Amount:</span> <span class="details-val">₹${opts.paidAmount}</span></div>
+              <div class="details-row"><span class="details-label">Phone Number:</span> <span class="details-val">${opts.phone}</span></div>
+            </div>
+            <div class="cta-box">
+              <p style="margin-top:0; color:#ffffff; font-weight:600;">Access your Student Portal</p>
+              <p style="font-size:13px; color:#888888; margin-bottom:15px;">Create or log into your student account on our website to access live session links and study resources.</p>
+              <a href="${opts.portalUrl}/signup" class="button">Create Student Account</a>
+            </div>
+            <h3 style="color:#ffffff; font-size:15px; font-weight:600; margin-top:30px; margin-bottom:10px;">Connect With Us:</h3>
+            <p style="font-size:13px; margin-top:0;">Follow us to receive daily charts, analysis, and trade setup alerts:</p>
+            <div class="social-links">
+              <a href="https://www.instagram.com/prime__strike?igsh=MTBvZTkzdzFjNXA2cw%3D%3D&utm_source=qr" class="social-btn">📸 Instagram</a>
+              <a href="https://t.me/prime_strik" class="social-btn">✈️ Telegram Channel</a>
+            </div>
+          </div>
+          <div class="footer">
+            <p>&copy; ${new Date().getFullYear()} Prime Strike Academy. All Rights Reserved.</p>
+            <p>Email: <a href="mailto:contact@primestrike.co.in">contact@primestrike.co.in</a> | Phone: +91 95002 98631</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `,
+  };
+
+  await transporter.sendMail(mailOptions);
 }
