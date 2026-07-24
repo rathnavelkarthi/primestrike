@@ -11,14 +11,10 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { AlertCircle, Lock, Mail, User, Loader2, ArrowRight, Shield } from "lucide-react";
 import { motion } from "framer-motion";
 
-const ADMIN_SIGNUP_CODE = "primeadmin2026";
-
 export default function SignupPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [adminCode, setAdminCode] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [loadingState, setLoadingState] = useState(false);
@@ -54,14 +50,6 @@ export default function SignupPage() {
       return;
     }
 
-    // Determine final role and validate code if admin
-    const selectedRole = isAdmin ? "admin" : "student";
-    if (isAdmin && adminCode !== ADMIN_SIGNUP_CODE) {
-      setError("Invalid Admin Verification Code.");
-      setLoadingState(false);
-      return;
-    }
-
     try {
       const { data, error: signupError } = await supabase.auth.signUp({
         email,
@@ -69,7 +57,7 @@ export default function SignupPage() {
         options: {
           data: {
             name,
-            role: selectedRole,
+            role: "student",
           },
         },
       });
@@ -83,9 +71,6 @@ export default function SignupPage() {
       if (data.user) {
         setSuccess(true);
         setLoadingState(false);
-        // Automatically sign in or redirect
-        // Supabase auto-sign in might trigger depending on settings.
-        // Let's notify them to log in.
         setTimeout(() => {
           router.push("/login");
         }, 2000);
@@ -118,7 +103,7 @@ export default function SignupPage() {
               <Shield className="h-5 w-5 text-gold" />
             </div>
             <CardTitle className="text-2xl md:text-3xl font-bold tracking-tight text-white font-[family-name:var(--font-poppins)]">
-              Create Account
+              Create Student Account
             </CardTitle>
             <CardDescription className="text-white/60 text-sm">
               Start your stock trading and option hedging journey
@@ -137,7 +122,7 @@ export default function SignupPage() {
                 </div>
                 <h3 className="text-lg font-semibold text-white">Registration Successful!</h3>
                 <p className="text-white/60 text-sm">
-                  Your profile has been created. Redirecting to login...
+                  Your student portal account has been created. Redirecting to login...
                 </p>
               </motion.div>
             ) : (
@@ -200,58 +185,6 @@ export default function SignupPage() {
                     />
                   </div>
                 </div>
-
-                {/* Role selection tab button groups (Student vs Admin) */}
-                <div className="space-y-2.5 pt-2">
-                  <label className="text-xs font-semibold text-white/70 tracking-wide uppercase">Account Type</label>
-                  <div className="grid grid-cols-2 gap-2 bg-white/5 p-1 rounded-lg border border-white/10">
-                    <button
-                      type="button"
-                      onClick={() => setIsAdmin(false)}
-                      className={`py-2 text-xs font-semibold rounded-md transition-all ${
-                        !isAdmin
-                          ? "bg-gold text-gold-foreground"
-                          : "text-white/60 hover:text-white hover:bg-white/5"
-                      }`}
-                      disabled={loadingState}
-                    >
-                      Student Portal
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setIsAdmin(true)}
-                      className={`py-2 text-xs font-semibold rounded-md transition-all ${
-                        isAdmin
-                          ? "bg-gold text-gold-foreground"
-                          : "text-white/60 hover:text-white hover:bg-white/5"
-                      }`}
-                      disabled={loadingState}
-                    >
-                      Admin Dashboard
-                    </button>
-                  </div>
-                </div>
-
-                {isAdmin && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="space-y-1.5 pt-1.5"
-                  >
-                    <label className="text-xs font-semibold text-white/70 tracking-wide uppercase flex items-center gap-1.5">
-                      Admin Verification Code
-                    </label>
-                    <Input
-                      type="text"
-                      placeholder="Enter verification code"
-                      value={adminCode}
-                      onChange={(e) => setAdminCode(e.target.value)}
-                      className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-gold/50 focus:ring-gold/20 rounded-lg transition-all"
-                      disabled={loadingState}
-                      required={isAdmin}
-                    />
-                  </motion.div>
-                )}
 
                 <Button
                   type="submit"
