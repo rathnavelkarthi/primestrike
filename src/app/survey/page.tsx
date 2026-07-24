@@ -128,35 +128,25 @@ export default function SurveyPage() {
                   Follow our official channels for daily trade setups, live charts, and webinar alerts:
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-md mx-auto">
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="border-white/10 hover:bg-pink-500/10 hover:border-pink-500/30 text-white flex items-center justify-center gap-2 h-11 transition-all rounded-xl"
+                  <a
+                    href="https://www.instagram.com/prime__strike?igsh=MTBvZTkzdzFjNXA2cw%3D%3D&utm_source=qr"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-neutral-900 border border-white/15 hover:bg-pink-500/10 hover:border-pink-500/40 text-white font-medium flex items-center justify-center gap-2 h-11 px-4 transition-all rounded-xl shadow-sm text-xs"
                   >
-                    <a
-                      href="https://www.instagram.com/prime__strike?igsh=MTBvZTkzdzFjNXA2cw%3D%3D&utm_source=qr"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Instagram className="h-4.5 w-4.5 text-pink-500" />
-                      Follow on Instagram
-                    </a>
-                  </Button>
+                    <Instagram className="h-4.5 w-4.5 text-pink-500 shrink-0" />
+                    <span>Follow on Instagram</span>
+                  </a>
 
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="border-white/10 hover:bg-blue-500/10 hover:border-blue-500/30 text-white flex items-center justify-center gap-2 h-11 transition-all rounded-xl"
+                  <a
+                    href="https://t.me/prime_strik"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-neutral-900 border border-white/15 hover:bg-blue-500/10 hover:border-blue-500/40 text-white font-medium flex items-center justify-center gap-2 h-11 px-4 transition-all rounded-xl shadow-sm text-xs"
                   >
-                    <a
-                      href="https://t.me/prime_strik"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Send className="h-4.5 w-4.5 text-blue-400" />
-                      Join Telegram Channel
-                    </a>
-                  </Button>
+                    <Send className="h-4.5 w-4.5 text-blue-400 shrink-0" />
+                    <span>Join Telegram Channel</span>
+                  </a>
                 </div>
               </div>
 

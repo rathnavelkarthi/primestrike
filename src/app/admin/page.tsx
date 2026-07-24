@@ -27,7 +27,9 @@ import {
   ExternalLink,
   MessageSquare,
   TrendingUp,
-  Coins
+  Coins,
+  FileSpreadsheet,
+  Download
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -275,6 +277,79 @@ export default function AdminDashboard() {
     } catch (err) {
       console.error("Error deleting lead:", err);
     }
+  };
+
+  const parseLeadData = (lead: Lead) => {
+    let course = lead.joined_course || lead.experience || "Basic to Advance";
+    let firstClassDate = lead.first_class_date || "";
+    let paidAmount = lead.paid_amount || "";
+    let displayNotes = lead.notes || "";
+
+    if (lead.notes) {
+      const courseMatch = lead.notes.match(/Joined Course:\s*([^|\]]+)/i);
+      const dateMatch = lead.notes.match(/1st Class Date:\s*([^|\]]+)/i);
+      const feesMatch = lead.notes.match(/Paid Fees:\s*([^|\]]+)/i);
+
+      if (courseMatch && (!lead.joined_course || lead.experience === "beginner")) {
+        course = courseMatch[1].trim();
+      }
+      if (dateMatch && !lead.first_class_date) {
+        const d = dateMatch[1].trim();
+        if (d !== "Not set" && d !== "To be scheduled") {
+          firstClassDate = d;
+        }
+      }
+      if (feesMatch && !lead.paid_amount) {
+        const f = feesMatch[1].trim();
+        if (f !== "Recorded" && f !== "—") {
+          paidAmount = f;
+        }
+      }
+
+      displayNotes = lead.notes.replace(/^\[Joined Course:.*?\]\s*/i, "").trim();
+    }
+
+    if (course.toLowerCase() === "beginner" || course.toLowerCase() === "intermediate") {
+      course = "Basic to Advance";
+    }
+
+    return {
+      course,
+      firstClassDate: firstClassDate || "To be scheduled",
+      paidAmount: paidAmount ? (paidAmount.startsWith("₹") ? paidAmount : `₹${paidAmount}`) : "Recorded",
+      displayNotes: displayNotes || "—"
+    };
+  };
+
+  const handleExportCSV = () => {
+    if (leads.length === 0) return;
+
+    const headers = ["Date", "Student Name", "Email", "Phone", "Joined Course", "First Class Date", "Paid Fees", "Status", "Notes / Remarks"];
+    
+    const rows = leads.map(lead => {
+      const parsed = parseLeadData(lead);
+      const dateStr = new Date(lead.created_at).toLocaleDateString("en-IN");
+      return [
+        `"${dateStr}"`,
+        `"${(lead.name || "").replace(/"/g, '""')}"`,
+        `"${(lead.email || "").replace(/"/g, '""')}"`,
+        `"${(lead.phone || "").replace(/"/g, '""')}"`,
+        `"${parsed.course.replace(/"/g, '""')}"`,
+        `"${parsed.firstClassDate.replace(/"/g, '""')}"`,
+        `"${parsed.paidAmount.replace(/"/g, '""')}"`,
+        `"${(lead.status || "new").toUpperCase()}"`,
+        `"${parsed.displayNotes.replace(/"/g, '""')}"`
+      ].join(",");
+    });
+
+    const csvContent = "data:text/csv;charset=utf-8,\uFEFF" + [headers.join(","), ...rows].join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `prime_strike_joined_courses_${new Date().toISOString().slice(0,10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   if (authLoading || !user || !profile || profile.role !== "admin") {
@@ -723,14 +798,25 @@ export default function AdminDashboard() {
             animate={{ opacity: 1, y: 0 }}
           >
             <Card className="border border-white/10 bg-neutral-950/80 backdrop-blur-md">
-              <CardHeader className="border-b border-white/5 py-4">
-                <CardTitle className="text-md font-bold flex items-center gap-2 text-white font-[family-name:var(--font-poppins)]">
-                  <TrendingUp className="h-4.5 w-4.5 text-gold" />
-                  Joined Course Submissions & Enquiries ({leads.length})
-                </CardTitle>
-                <CardDescription className="text-white/50 text-xs">
-                  Review student course registrations, check first class dates, and verify fees paid.
-                </CardDescription>
+              <CardHeader className="border-b border-white/5 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <CardTitle className="text-md font-bold flex items-center gap-2 text-white font-[family-name:var(--font-poppins)]">
+                    <TrendingUp className="h-4.5 w-4.5 text-gold" />
+                    Joined Course Submissions & Enquiries ({leads.length})
+                  </CardTitle>
+                  <CardDescription className="text-white/50 text-xs">
+                    Review student course registrations, check first class dates, and verify fees paid.
+                  </CardDescription>
+                </div>
+                {leads.length > 0 && (
+                  <Button
+                    onClick={handleExportCSV}
+                    className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs h-9 px-3.5 rounded-xl flex items-center gap-2 transition-all shadow-md shrink-0 cursor-pointer"
+                  >
+                    <FileSpreadsheet className="h-4 w-4" />
+                    Download Excel Sheet (.CSV)
+                  </Button>
+                )}
               </CardHeader>
               <CardContent className="pt-4 px-0">
                 {fetchingData ? (
@@ -754,16 +840,13 @@ export default function AdminDashboard() {
                       </thead>
                       <tbody className="divide-y divide-white/5">
                         {leads.map((lead) => {
-                          const courseName = lead.joined_course || lead.experience || "Basic to Advance";
-                          const isAdvance = courseName.toLowerCase().includes("advance level");
-                          const formattedFee = lead.paid_amount 
-                            ? (lead.paid_amount.startsWith("₹") ? lead.paid_amount : `₹${lead.paid_amount}`)
-                            : "—";
+                          const parsed = parseLeadData(lead);
+                          const isAdvance = parsed.course.toLowerCase().includes("advance level");
 
                           return (
-                            <tr key={lead.id} className="hover:bg-white/[0.01] transition-all">
+                            <tr key={lead.id} className="hover:bg-white/[0.02] transition-all">
                               <td className="py-3.5 px-6 font-medium text-white">
-                                <div className="font-semibold text-white">{lead.name}</div>
+                                <div className="font-semibold text-white text-sm">{lead.name}</div>
                                 <div className="text-[10px] text-white/40">
                                   {new Date(lead.created_at).toLocaleDateString("en-IN", {
                                     year: "numeric",
@@ -773,15 +856,15 @@ export default function AdminDashboard() {
                                 </div>
                               </td>
                               <td className="py-3.5 px-6 space-y-1">
-                                <div className="flex items-center gap-1.5 text-xs text-white/70">
+                                <div className="flex items-center gap-1.5 text-xs text-white/80">
                                   <Mail className="h-3.5 w-3.5 text-gold shrink-0" />
                                   <a href={`mailto:${lead.email}`} className="hover:underline hover:text-gold truncate max-w-[160px]">
                                     {lead.email}
                                   </a>
                                 </div>
-                                <div className="flex items-center gap-1.5 text-xs text-white/70">
+                                <div className="flex items-center gap-1.5 text-xs text-white/80">
                                   <Phone className="h-3.5 w-3.5 text-gold shrink-0" />
-                                  <a href={`tel:${lead.phone}`} className="hover:underline hover:text-gold">
+                                  <a href={`tel:${lead.phone}`} className="hover:underline hover:text-gold font-medium">
                                     {lead.phone}
                                   </a>
                                 </div>
@@ -789,25 +872,25 @@ export default function AdminDashboard() {
                               <td className="py-3.5 px-6">
                                 <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider inline-block ${
                                   isAdvance
-                                    ? "bg-purple-500/10 text-purple-300 border-purple-500/30"
-                                    : "bg-gold/10 text-gold border-gold/30"
+                                    ? "bg-purple-500/15 text-purple-300 border-purple-500/30"
+                                    : "bg-gold/15 text-gold border-gold/40"
                                 }`}>
-                                  {courseName}
+                                  {parsed.course}
                                 </span>
                               </td>
                               <td className="py-3.5 px-6 space-y-1">
-                                <div className="text-xs flex items-center gap-1 text-white/80">
+                                <div className="text-xs flex items-center gap-1 text-white/90">
                                   <span className="text-white/40">1st Class:</span>
-                                  <span className="text-gold font-medium">{lead.first_class_date || "Not set"}</span>
+                                  <span className="text-gold font-semibold">{parsed.firstClassDate}</span>
                                 </div>
-                                <div className="text-xs flex items-center gap-1 text-white/80">
+                                <div className="text-xs flex items-center gap-1 text-white/90">
                                   <span className="text-white/40">Paid Fees:</span>
-                                  <span className="text-emerald-400 font-semibold">{formattedFee}</span>
+                                  <span className="text-emerald-400 font-bold">{parsed.paidAmount}</span>
                                 </div>
                               </td>
-                              <td className="py-3.5 px-6 max-w-[180px]">
-                                <p className="text-xs text-white/60 line-clamp-2" title={lead.notes}>
-                                  {lead.notes || "—"}
+                              <td className="py-3.5 px-6 max-w-[200px]">
+                                <p className="text-xs text-white/70 line-clamp-2" title={parsed.displayNotes}>
+                                  {parsed.displayNotes}
                                 </p>
                               </td>
                               <td className="py-3.5 px-6">
