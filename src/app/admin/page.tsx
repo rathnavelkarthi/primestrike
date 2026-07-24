@@ -414,6 +414,15 @@ export default function AdminDashboard() {
               Manage webinar events, review survey assessment leads, and browse registered students in your portal directory.
             </p>
           </div>
+          <div>
+            <Button
+              onClick={handleExportCSV}
+              className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs md:text-sm h-11 px-5 rounded-xl flex items-center gap-2.5 transition-all shadow-lg cursor-pointer shrink-0"
+            >
+              <FileSpreadsheet className="h-4.5 w-4.5" />
+              Download Excel Sheet (.CSV)
+            </Button>
+          </div>
         </motion.div>
 
         {/* Tab Subnavigation */}
@@ -808,15 +817,13 @@ export default function AdminDashboard() {
                     Review student course registrations, check first class dates, and verify fees paid.
                   </CardDescription>
                 </div>
-                {leads.length > 0 && (
-                  <Button
-                    onClick={handleExportCSV}
-                    className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs h-9 px-3.5 rounded-xl flex items-center gap-2 transition-all shadow-md shrink-0 cursor-pointer"
-                  >
-                    <FileSpreadsheet className="h-4 w-4" />
-                    Download Excel Sheet (.CSV)
-                  </Button>
-                )}
+                <Button
+                  onClick={handleExportCSV}
+                  className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs h-9 px-3.5 rounded-xl flex items-center gap-2 transition-all shadow-md shrink-0 cursor-pointer"
+                >
+                  <FileSpreadsheet className="h-4 w-4" />
+                  Download Excel Sheet (.CSV)
+                </Button>
               </CardHeader>
               <CardContent className="pt-4 px-0">
                 {fetchingData ? (
