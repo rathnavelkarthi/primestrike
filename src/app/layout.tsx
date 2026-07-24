@@ -54,8 +54,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${poppins.variable} ${inter.variable}`}>
-      <body className="font-[family-name:var(--font-inter)] antialiased">
+    <html lang="en" className={`dark ${poppins.variable} ${inter.variable}`}>
+      <body className="font-[family-name:var(--font-inter)] bg-black text-white min-h-screen antialiased">
         <AuthProvider>
           <Navbar />
           <main>{children}</main>
