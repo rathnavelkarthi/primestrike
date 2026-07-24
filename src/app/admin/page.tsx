@@ -614,7 +614,13 @@ export default function AdminDashboard() {
                           type="date"
                           value={eventDate}
                           onChange={(e) => setEventDate(e.target.value)}
-                          className="bg-white/5 border-white/10 text-white h-10 text-sm cursor-pointer"
+                          onClick={(e) => {
+                            try {
+                              e.currentTarget.showPicker?.();
+                            } catch (err) {}
+                          }}
+                          style={{ colorScheme: "dark" }}
+                          className="bg-white/5 border-white/10 text-white h-10 text-sm cursor-pointer [color-scheme:dark]"
                           disabled={formSubmitting}
                           required
                         />

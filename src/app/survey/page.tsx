@@ -322,14 +322,22 @@ export default function SurveyPage() {
                         <Calendar className="h-4 w-4 text-gold" />
                         First Class Date *
                       </label>
-                      <Input
-                        type="date"
-                        value={firstClassDate}
-                        onChange={(e) => setFirstClassDate(e.target.value)}
-                        className="h-10 bg-white/5 border-white/10 text-white text-xs focus:border-gold/50 focus:ring-gold/20"
-                        disabled={loading}
-                        required
-                      />
+                      <div className="relative">
+                        <Input
+                          type="date"
+                          value={firstClassDate}
+                          onChange={(e) => setFirstClassDate(e.target.value)}
+                          onClick={(e) => {
+                            try {
+                              e.currentTarget.showPicker?.();
+                            } catch (err) {}
+                          }}
+                          style={{ colorScheme: "dark" }}
+                          className="h-10 bg-white/5 border-white/10 text-white text-xs focus:border-gold/50 focus:ring-gold/20 cursor-pointer [color-scheme:dark]"
+                          disabled={loading}
+                          required
+                        />
+                      </div>
                     </div>
 
                     <div className="space-y-1.5">
