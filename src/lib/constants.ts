@@ -54,8 +54,8 @@ export const SITE_NAME = "Prime Strike";
 export const SITE_TAGLINE = "Learn to trade with confidence";
 export const SITE_DESCRIPTION =
   "Interactive trading webinars and online classes in Chennai. Master options trading, technical analysis, and stock market strategies with founder Saranya.";
-export const SITE_URL = "https://www.primestrike.in";
-export const SITE_EMAIL = "contact@primestrike.in";
+export const SITE_URL = "https://www.primestrike.co.in";
+export const SITE_EMAIL = "contact@primestrike.co.in";
 export const SITE_PHONE = "+91 95002 98631";
 export const SITE_WHATSAPP = "+91 95002 98631";
 export const EST_YEAR = "2024";

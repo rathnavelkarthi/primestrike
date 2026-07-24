@@ -54,10 +54,13 @@ interface Lead {
   name: string;
   email: string;
   phone: string;
-  experience: "beginner" | "intermediate" | "experienced";
-  goal: string;
-  capital: string;
-  notes: string;
+  experience?: string;
+  joined_course?: string;
+  first_class_date?: string;
+  paid_amount?: string;
+  goal?: string;
+  capital?: string;
+  notes?: string;
   status: "new" | "contacted" | "joined" | "ignored";
   created_at: string;
 }
@@ -360,7 +363,7 @@ export default function AdminDashboard() {
             }`}
           >
             <TrendingUp className="h-4 w-4" />
-            Assessment Leads
+            Joined Course & Enquiries
             {leads.filter(l => l.status === "new").length > 0 && (
               <span className="text-[10px] bg-gold text-gold-foreground font-bold px-1.5 py-0.5 rounded-full animate-pulse">
                 {leads.filter(l => l.status === "new").length}
@@ -717,17 +720,17 @@ export default function AdminDashboard() {
               <CardHeader className="border-b border-white/5 py-4">
                 <CardTitle className="text-md font-bold flex items-center gap-2 text-white font-[family-name:var(--font-poppins)]">
                   <TrendingUp className="h-4.5 w-4.5 text-gold" />
-                  Trading Assessment Leads ({leads.length})
+                  Joined Course Submissions & Enquiries ({leads.length})
                 </CardTitle>
                 <CardDescription className="text-white/50 text-xs">
-                  Review student assessment forms, analyze experience levels, and follow up.
+                  Review student course registrations, check first class dates, and verify fees paid.
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-4 px-0">
                 {fetchingData ? (
                   <div className="py-8 text-center text-white/40 flex items-center justify-center gap-2">
                     <Loader2 className="h-4.5 w-4.5 animate-spin text-gold" />
-                    Retrieving survey leads...
+                    Retrieving course submissions...
                   </div>
                 ) : leads.length > 0 ? (
                   <div className="overflow-x-auto">
@@ -735,105 +738,114 @@ export default function AdminDashboard() {
                       <thead>
                         <tr className="border-b border-white/5 text-white/55 text-xs font-semibold uppercase tracking-wider bg-white/[0.01]">
                           <th className="py-3 px-6">Date & Student Name</th>
-                          <th className="py-3 px-6">Contact Channels</th>
-                          <th className="py-3 px-6">Experience & Focus</th>
-                          <th className="py-3 px-6">Notes / Questions</th>
+                          <th className="py-3 px-6">Contact Details</th>
+                          <th className="py-3 px-6">Joined Course</th>
+                          <th className="py-3 px-6">Class Date & Fees</th>
+                          <th className="py-3 px-6">Notes / Remarks</th>
                           <th className="py-3 px-6">Status Badge</th>
                           <th className="py-3 px-6 text-right">Actions</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-white/5">
-                        {leads.map((lead) => (
-                          <tr key={lead.id} className="hover:bg-white/[0.01] transition-all">
-                            <td className="py-3.5 px-6 font-medium text-white">
-                              <div>{lead.name}</div>
-                              <div className="text-[10px] text-white/40">
-                                {new Date(lead.created_at).toLocaleDateString("en-IN", {
-                                  year: "numeric",
-                                  month: "short",
-                                  day: "numeric"
-                                })}
-                              </div>
-                            </td>
-                            <td className="py-3.5 px-6 space-y-1">
-                              <div className="flex items-center gap-1.5 text-xs text-white/70">
-                                <Mail className="h-3.5 w-3.5 text-gold shrink-0" />
-                                <a href={`mailto:${lead.email}`} className="hover:underline hover:text-gold truncate max-w-[160px]">
-                                  {lead.email}
-                                </a>
-                              </div>
-                              <div className="flex items-center gap-1.5 text-xs text-white/70">
-                                <Phone className="h-3.5 w-3.5 text-gold shrink-0" />
-                                <a href={`tel:${lead.phone}`} className="hover:underline hover:text-gold">
-                                  {lead.phone}
-                                </a>
-                              </div>
-                            </td>
-                            <td className="py-3.5 px-6 space-y-1.5">
-                              <div>
-                                <span className={`text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider ${
-                                  lead.experience === "beginner"
-                                    ? "bg-sky-500/10 text-sky-400 border border-sky-500/20"
-                                    : lead.experience === "intermediate"
-                                    ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
-                                    : "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                        {leads.map((lead) => {
+                          const courseName = lead.joined_course || lead.experience || "Basic to Advance";
+                          const isAdvance = courseName.toLowerCase().includes("advance level");
+                          const formattedFee = lead.paid_amount 
+                            ? (lead.paid_amount.startsWith("₹") ? lead.paid_amount : `₹${lead.paid_amount}`)
+                            : "—";
+
+                          return (
+                            <tr key={lead.id} className="hover:bg-white/[0.01] transition-all">
+                              <td className="py-3.5 px-6 font-medium text-white">
+                                <div className="font-semibold text-white">{lead.name}</div>
+                                <div className="text-[10px] text-white/40">
+                                  {new Date(lead.created_at).toLocaleDateString("en-IN", {
+                                    year: "numeric",
+                                    month: "short",
+                                    day: "numeric"
+                                  })}
+                                </div>
+                              </td>
+                              <td className="py-3.5 px-6 space-y-1">
+                                <div className="flex items-center gap-1.5 text-xs text-white/70">
+                                  <Mail className="h-3.5 w-3.5 text-gold shrink-0" />
+                                  <a href={`mailto:${lead.email}`} className="hover:underline hover:text-gold truncate max-w-[160px]">
+                                    {lead.email}
+                                  </a>
+                                </div>
+                                <div className="flex items-center gap-1.5 text-xs text-white/70">
+                                  <Phone className="h-3.5 w-3.5 text-gold shrink-0" />
+                                  <a href={`tel:${lead.phone}`} className="hover:underline hover:text-gold">
+                                    {lead.phone}
+                                  </a>
+                                </div>
+                              </td>
+                              <td className="py-3.5 px-6">
+                                <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border uppercase tracking-wider inline-block ${
+                                  isAdvance
+                                    ? "bg-purple-500/10 text-purple-300 border-purple-500/30"
+                                    : "bg-gold/10 text-gold border-gold/30"
                                 }`}>
-                                  {lead.experience}
+                                  {courseName}
                                 </span>
-                              </div>
-                              <div className="text-xs text-white/50 pt-0.5">
-                                Goal: <span className="text-white/70 capitalize">{lead.goal}</span>
-                              </div>
-                              <div className="text-xs text-white/50">
-                                Capital: <span className="text-white/70">{lead.capital}</span>
-                              </div>
-                            </td>
-                            <td className="py-3.5 px-6 max-w-[200px]">
-                              <p className="text-xs text-white/60 line-clamp-2" title={lead.notes}>
-                                {lead.notes || "—"}
-                              </p>
-                            </td>
-                            <td className="py-3.5 px-6">
-                              <span className={`text-[9px] font-semibold px-2 py-0.5 rounded uppercase tracking-wider ${
-                                lead.status === "new"
-                                  ? "bg-red-500/10 text-red-400 border border-red-500/20 animate-pulse"
-                                  : lead.status === "contacted"
-                                  ? "bg-indigo-500/10 text-indigo-400 border border-indigo-500/20"
-                                  : lead.status === "joined"
-                                  ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                                  : "bg-neutral-500/10 text-neutral-400 border border-neutral-500/20"
-                              }`}>
-                                {lead.status}
-                              </span>
-                            </td>
-                            <td className="py-3.5 px-6 text-right">
-                              <div className="flex justify-end items-center gap-2">
-                                <select
-                                  value={lead.status}
-                                  onChange={(e) => handleUpdateLeadStatus(lead.id, e.target.value)}
-                                  className="bg-neutral-900 border border-white/10 rounded-lg text-white text-[11px] h-8 px-2 outline-none focus:border-gold/50 cursor-pointer"
-                                >
-                                  <option value="new">New Lead</option>
-                                  <option value="contacted">Contacted</option>
-                                  <option value="joined">Joined Academy</option>
-                                  <option value="ignored">Ignored</option>
-                                </select>
-                                <Button
-                                  onClick={() => handleDeleteLead(lead.id)}
-                                  variant="ghost"
-                                  className="text-red-400 hover:text-red-300 hover:bg-red-500/10 p-1.5 h-8 w-8 rounded-lg transition-all shrink-0"
-                                >
-                                  <Trash2 className="h-4 w-4" />
-                                </Button>
-                              </div>
-                            </td>
-                          </tr>
-                        ))}
+                              </td>
+                              <td className="py-3.5 px-6 space-y-1">
+                                <div className="text-xs flex items-center gap-1 text-white/80">
+                                  <span className="text-white/40">1st Class:</span>
+                                  <span className="text-gold font-medium">{lead.first_class_date || "Not set"}</span>
+                                </div>
+                                <div className="text-xs flex items-center gap-1 text-white/80">
+                                  <span className="text-white/40">Paid Fees:</span>
+                                  <span className="text-emerald-400 font-semibold">{formattedFee}</span>
+                                </div>
+                              </td>
+                              <td className="py-3.5 px-6 max-w-[180px]">
+                                <p className="text-xs text-white/60 line-clamp-2" title={lead.notes}>
+                                  {lead.notes || "—"}
+                                </p>
+                              </td>
+                              <td className="py-3.5 px-6">
+                                <span className={`text-[9px] font-semibold px-2 py-0.5 rounded uppercase tracking-wider ${
+                                  lead.status === "new"
+                                    ? "bg-red-500/10 text-red-400 border border-red-500/20 animate-pulse"
+                                    : lead.status === "contacted"
+                                    ? "bg-indigo-500/10 text-indigo-400 border border-indigo-500/20"
+                                    : lead.status === "joined"
+                                    ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                                    : "bg-neutral-500/10 text-neutral-400 border border-neutral-500/20"
+                                }`}>
+                                  {lead.status}
+                                </span>
+                              </td>
+                              <td className="py-3.5 px-6 text-right">
+                                <div className="flex justify-end items-center gap-2">
+                                  <select
+                                    value={lead.status}
+                                    onChange={(e) => handleUpdateLeadStatus(lead.id, e.target.value)}
+                                    className="bg-neutral-900 border border-white/10 rounded-lg text-white text-[11px] h-8 px-2 outline-none focus:border-gold/50 cursor-pointer"
+                                  >
+                                    <option value="new">New Lead</option>
+                                    <option value="contacted">Contacted</option>
+                                    <option value="joined">Joined Academy</option>
+                                    <option value="ignored">Ignored</option>
+                                  </select>
+                                  <Button
+                                    onClick={() => handleDeleteLead(lead.id)}
+                                    variant="ghost"
+                                    className="text-red-400 hover:text-red-300 hover:bg-red-500/10 p-1.5 h-8 w-8 rounded-lg transition-all shrink-0"
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>
                 ) : (
-                  <p className="text-center py-8 text-sm text-white/40">No trading assessment leads submitted yet.</p>
+                  <p className="text-center py-8 text-sm text-white/40">No course registrations or enquiries submitted yet.</p>
                 )}
               </CardContent>
             </Card>

@@ -5,11 +5,13 @@ import nodemailer from "nodemailer";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, phone, experience, goal, capital, notes } = body;
+    const { name, email, phone, joinedCourse, experience, firstClassDate, paidAmount, notes } = body;
 
-    if (!name || !email || !phone || !experience) {
+    const courseSelected = joinedCourse || experience || "Basic to Advance";
+
+    if (!name || !email || !phone) {
       return NextResponse.json(
-        { error: "Name, email, phone, and experience are required." },
+        { error: "Name, email, and phone are required." },
         { status: 400 }
       );
     }
@@ -22,23 +24,24 @@ export async function POST(request: Request) {
           name,
           email,
           phone,
-          experience,
-          goal: goal || "",
-          capital: capital || "",
+          experience: courseSelected,
+          joined_course: courseSelected,
+          first_class_date: firstClassDate || "",
+          paid_amount: paidAmount || "",
           notes: notes || "",
-          status: "new",
+          status: "joined",
         },
       ]);
 
     if (dbError) {
       console.error("Database error inserting lead:", dbError);
       return NextResponse.json(
-        { error: "Failed to store assessment details." },
+        { error: "Failed to store course registration details." },
         { status: 500 }
       );
     }
 
-    // 2. Setup nodemailer transporter (Hostinger SMTP)
+    // 2. Setup nodemailer transporter (Hostinger SMTP for primestrike.co.in)
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST || "smtp.hostinger.com",
       port: parseInt(process.env.SMTP_PORT || "465"),
@@ -55,7 +58,7 @@ export async function POST(request: Request) {
     const mailOptions = {
       from: `"Prime Strike Trading Academy" <${process.env.SMTP_USER || "contact@primestrike.co.in"}>`,
       to: email,
-      subject: "Welcome to Prime Strike — Trading Assessment Received",
+      subject: `Welcome to Prime Strike — Enrollment Confirmed (${courseSelected})`,
       html: `
         <!DOCTYPE html>
         <html>
@@ -69,6 +72,10 @@ export async function POST(request: Request) {
             .content { padding: 40px 30px; line-height: 1.6; color: #cccccc; }
             .content h2 { color: #ffffff; font-size: 20px; font-weight: 600; margin-top: 0; }
             .badge { display: inline-block; background-color: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3); color: #d4af37; font-size: 11px; font-weight: 600; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; margin-bottom: 15px; }
+            .details-box { background-color: #111111; border: 1px solid #222222; border-radius: 8px; padding: 18px; margin: 20px 0; }
+            .details-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; }
+            .details-label { color: #888888; }
+            .details-val { color: #ffffff; font-weight: 600; }
             .highlight { color: #d4af37; font-weight: 600; }
             .cta-box { background-color: #121212; border: 1px solid #1c1c1c; border-radius: 8px; padding: 25px; margin: 25px 0; text-align: center; }
             .button { display: inline-block; background-color: #d4af37; color: #000000; text-decoration: none; font-weight: bold; font-size: 14px; padding: 12px 30px; border-radius: 60px; margin-top: 10px; transition: background-color 0.2s; }
@@ -85,15 +92,22 @@ export async function POST(request: Request) {
             </div>
             
             <div class="content">
-              <h2>Thank you for your submission, ${name}!</h2>
-              <div class="badge">Assessment Received</div>
+              <h2>Thank you for registering, ${name}!</h2>
+              <div class="badge">Course Registration Received</div>
               <p>
-                We have received your trading profile details. Our founder, <span class="highlight">Saranya</span>, and our team will review your objectives and contact you shortly at <span class="highlight">${phone}</span> (via call or WhatsApp) to help you get started on your options trading journey.
+                We have received your enrollment details for Prime Strike Academy. Our founder, <span class="highlight">Saranya</span>, and our team are excited to have you on board!
               </p>
+
+              <div class="details-box">
+                <div class="details-row"><span class="details-label">Joined Course:</span> <span class="details-val">${courseSelected}</span></div>
+                <div class="details-row"><span class="details-label">First Class Date:</span> <span class="details-val">${firstClassDate || "To be scheduled"}</span></div>
+                <div class="details-row"><span class="details-label">Fees Paid Amount:</span> <span class="details-val">₹${paidAmount || "Recorded"}</span></div>
+                <div class="details-row"><span class="details-label">Phone Number:</span> <span class="details-val">${phone}</span></div>
+              </div>
               
               <div class="cta-box">
-                <p style="margin-top:0; color:#ffffff; font-weight:600;">Ready to explore our webinars and calendar?</p>
-                <p style="font-size:13px; color:#888888; margin-bottom:15px;">Create a student account on our website to access upcoming webinar listings, recorded resources, and tools.</p>
+                <p style="margin-top:0; color:#ffffff; font-weight:600;">Access your Student Portal</p>
+                <p style="font-size:13px; color:#888888; margin-bottom:15px;">Create or log into your student account on our website to access live session links and study resources.</p>
                 <a href="${portalUrl}/signup" class="button">Create Student Account</a>
               </div>
               

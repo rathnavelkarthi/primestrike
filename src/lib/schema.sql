@@ -109,19 +109,27 @@ values
     'Psychology'
   );
 
--- 8. Create Leads Table for Trading Survey/Assessment Form
+-- 8. Create Leads Table for Joined Course & Enquiries Form
 create table if not exists public.leads (
   id uuid default gen_random_uuid() primary key,
   name text not null,
   email text not null,
   phone text not null,
-  experience text not null check (experience in ('beginner', 'intermediate', 'experienced')),
+  experience text,
+  joined_course text default 'Basic to Advance',
+  first_class_date text,
+  paid_amount text,
   goal text,
   capital text,
   notes text,
   status text not null default 'new' check (status in ('new', 'contacted', 'joined', 'ignored')),
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
+
+-- Ensure new columns exist on existing tables
+alter table public.leads add column if not exists joined_course text;
+alter table public.leads add column if not exists first_class_date text;
+alter table public.leads add column if not exists paid_amount text;
 
 -- Enable RLS on Leads table
 alter table public.leads enable row level security;
