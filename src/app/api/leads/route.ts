@@ -16,32 +16,48 @@ export async function POST(request: Request) {
       );
     }
 
-    // 1. Insert into Supabase Leads table
-    const { error: dbError } = await supabase
-      .from("leads")
-      .insert([
-        {
-          name,
-          email,
-          phone,
-          experience: courseSelected,
-          joined_course: courseSelected,
-          first_class_date: firstClassDate || "",
-          paid_amount: paidAmount || "",
-          notes: notes || "",
-          status: "joined",
-        },
-      ]);
+    const formattedNotes = `[Joined Course: ${courseSelected} | 1st Class Date: ${firstClassDate || "Not set"} | Paid Fees: ₹${paidAmount || "Recorded"}] ${notes ? `— Notes: ${notes}` : ""}`;
 
+    // 1. Try inserting with new schema columns
+    const fullPayload = {
+      name,
+      email,
+      phone,
+      experience: courseSelected,
+      joined_course: courseSelected,
+      first_class_date: firstClassDate || "",
+      paid_amount: paidAmount || "",
+      notes: formattedNotes,
+      status: "joined",
+    };
+
+    let { error: dbError } = await supabase.from("leads").insert([fullPayload]);
+
+    // 2. Fallback for existing Supabase tables that haven't run the SQL alter table migration yet
     if (dbError) {
-      console.error("Database error inserting lead:", dbError);
-      return NextResponse.json(
-        { error: "Failed to store course registration details." },
-        { status: 500 }
-      );
+      console.warn("Supabase primary schema insertion notice, attempting fallback layout:", dbError.message);
+      
+      const fallbackPayload = {
+        name,
+        email,
+        phone,
+        experience: "beginner",
+        notes: formattedNotes,
+        status: "new",
+      };
+
+      const { error: fallbackError } = await supabase.from("leads").insert([fallbackPayload]);
+      
+      if (fallbackError) {
+        console.error("Database fallback error inserting lead:", fallbackError);
+        return NextResponse.json(
+          { error: "Failed to store registration details in Supabase database." },
+          { status: 500 }
+        );
+      }
     }
 
-    // 2. Setup nodemailer transporter (Hostinger SMTP for primestrike.co.in)
+    // 3. Setup nodemailer transporter (Hostinger SMTP for primestrike.co.in)
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST || "smtp.hostinger.com",
       port: parseInt(process.env.SMTP_PORT || "465"),
@@ -54,7 +70,7 @@ export async function POST(request: Request) {
 
     const portalUrl = `${new URL(request.url).origin}`;
     
-    // 3. Email Template (Black-Gold Theme)
+    // 4. Email Template (Black-Gold Theme)
     const mailOptions = {
       from: `"Prime Strike Trading Academy" <${process.env.SMTP_USER || "contact@primestrike.co.in"}>`,
       to: email,
@@ -68,7 +84,7 @@ export async function POST(request: Request) {
             .container { max-width: 600px; margin: 0 auto; background-color: #0a0a0a; border: 1px solid #1a1a1a; border-radius: 12px; overflow: hidden; margin-top: 40px; margin-bottom: 40px; }
             .header { background-color: #000000; text-align: center; padding: 30px 20px; border-bottom: 1px solid #1c1c1c; }
             .header h1 { color: #ffffff; font-size: 26px; font-weight: 700; margin: 0; letter-spacing: -0.5px; }
-            .header h1 span { color: #d4af37; } /* Gold accent */
+            .header h1 span { color: #d4af37; }
             .content { padding: 40px 30px; line-height: 1.6; color: #cccccc; }
             .content h2 { color: #ffffff; font-size: 20px; font-weight: 600; margin-top: 0; }
             .badge { display: inline-block; background-color: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3); color: #d4af37; font-size: 11px; font-weight: 600; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; margin-bottom: 15px; }
@@ -129,7 +145,7 @@ export async function POST(request: Request) {
       `,
     };
 
-    // 4. Send the email
+    // 5. Send confirmation email
     try {
       await transporter.sendMail(mailOptions);
     } catch (mailError) {
