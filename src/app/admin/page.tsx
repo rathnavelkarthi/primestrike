@@ -72,7 +72,16 @@ export default function AdminDashboard() {
   const router = useRouter();
 
   // Tab State
-  const [activeTab, setActiveTab] = useState<"events" | "leads" | "students">("events");
+  const [activeTab, setActiveTab] = useState<"events" | "leads" | "students" | "videos">("events");
+
+  // Video access grant states
+  const [videoFiles, setVideoFiles] = useState<string[]>([]);
+  const [videoLoading, setVideoLoading] = useState(false);
+  const [vgEmail, setVgEmail] = useState("");
+  const [vgPath, setVgPath] = useState("");
+  const [vgHours, setVgHours] = useState("72");
+  const [vgSubmitting, setVgSubmitting] = useState(false);
+  const [vgResult, setVgResult] = useState<{ ok: boolean; msg: string } | null>(null);
 
   // Data States
   const [events, setEvents] = useState<EventItem[]>([]);
@@ -352,6 +361,69 @@ export default function AdminDashboard() {
     document.body.removeChild(link);
   };
 
+  // Fetch bucket video list (admin bearer token)
+  const fetchVideoFiles = async () => {
+    try {
+      setVideoLoading(true);
+      const { data: { session } } = await supabase.auth.getSession();
+      const res = await fetch("/api/video/list", {
+        headers: { Authorization: `Bearer ${session?.access_token || ""}` },
+      });
+      const json = await res.json();
+      if (res.ok) setVideoFiles(json.files || []);
+      else console.error("video list error:", json.error);
+    } catch (err) {
+      console.error("video list exception:", err);
+    } finally {
+      setVideoLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab === "videos" && user && profile?.role === "admin") {
+      fetchVideoFiles();
+    }
+  }, [activeTab, user, profile]);
+
+  // Send a one-time video access link
+  const handleSendVideoLink = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setVgResult(null);
+
+    if (!vgEmail || !vgPath) {
+      setVgResult({ ok: false, msg: "Email and video file are required." });
+      return;
+    }
+
+    try {
+      setVgSubmitting(true);
+      const { data: { session } } = await supabase.auth.getSession();
+      const res = await fetch("/api/video/grant", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.access_token || ""}`,
+        },
+        body: JSON.stringify({
+          email: vgEmail,
+          videoPath: vgPath,
+          expiresInHours: Number(vgHours) || 72,
+        }),
+      });
+      const json = await res.json();
+      if (res.ok) {
+        setVgResult({ ok: true, msg: `One-time link sent to ${vgEmail}.` });
+        setVgEmail("");
+      } else {
+        setVgResult({ ok: false, msg: json.error || "Failed to send link." });
+      }
+    } catch (err) {
+      setVgResult({ ok: false, msg: "Request failed. Try again." });
+    } finally {
+      setVgSubmitting(false);
+    }
+  };
+
   if (authLoading || !user || !profile || profile.role !== "admin") {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
@@ -464,6 +536,17 @@ export default function AdminDashboard() {
           >
             <Users className="h-4 w-4" />
             Registered Students
+          </button>
+          <button
+            onClick={() => setActiveTab("videos")}
+            className={`pb-3 text-sm font-semibold border-b-2 transition-all px-2 flex items-center gap-2 ${
+              activeTab === "videos"
+                ? "border-gold text-gold"
+                : "border-transparent text-white/50 hover:text-white"
+            }`}
+          >
+            <Video className="h-4 w-4" />
+            Video Access Links
           </button>
         </div>
 
@@ -1012,6 +1095,136 @@ export default function AdminDashboard() {
                 )}
               </CardContent>
             </Card>
+          </motion.div>
+        )}
+
+        {/* TAB 4: VIDEO ACCESS LINKS */}
+        {activeTab === "videos" && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+          >
+            <div className="lg:col-span-2">
+              <Card className="border border-white/10 bg-neutral-950/80 backdrop-blur-md">
+                <CardHeader className="border-b border-white/5 py-4">
+                  <CardTitle className="text-md font-bold flex items-center gap-2 text-white font-[family-name:var(--font-poppins)]">
+                    <Video className="h-4.5 w-4.5 text-gold" />
+                    Send One-Time Video Link
+                  </CardTitle>
+                  <CardDescription className="text-white/50 text-xs">
+                    Emails the viewer a personal link that works only once and expires. Recording cannot be technically blocked — treat this as access control, not DRM.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="pt-6">
+                  <form onSubmit={handleSendVideoLink} className="space-y-4">
+                    {vgResult && (
+                      <div
+                        className={`p-3 rounded-lg text-xs flex items-start gap-2 border ${
+                          vgResult.ok
+                            ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400"
+                            : "bg-destructive/10 border-destructive/20 text-destructive"
+                        }`}
+                      >
+                        {vgResult.ok ? (
+                          <Check className="h-4 w-4 shrink-0 mt-0.5" />
+                        ) : (
+                          <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
+                        )}
+                        <span>{vgResult.msg}</span>
+                      </div>
+                    )}
+
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-semibold text-white/60 uppercase tracking-wider">Recipient Email</label>
+                      <Input
+                        type="email"
+                        placeholder="student@example.com"
+                        value={vgEmail}
+                        onChange={(e) => setVgEmail(e.target.value)}
+                        className="bg-white/5 border-white/10 text-white placeholder:text-white/30 h-10 text-sm"
+                        disabled={vgSubmitting}
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-semibold text-white/60 uppercase tracking-wider">Video File</label>
+                      <div className="flex gap-2">
+                        <select
+                          value={vgPath}
+                          onChange={(e) => setVgPath(e.target.value)}
+                          className="w-full bg-neutral-900 border border-white/10 rounded-lg text-white h-10 px-3 text-xs outline-none focus:border-gold/50"
+                          disabled={vgSubmitting || videoLoading}
+                          required
+                        >
+                          <option value="">{videoLoading ? "Loading files..." : "Select a video"}</option>
+                          {videoFiles.map((f) => (
+                            <option key={f} value={f}>{f}</option>
+                          ))}
+                        </select>
+                        <Button
+                          type="button"
+                          onClick={fetchVideoFiles}
+                          variant="ghost"
+                          className="h-10 px-3 border border-white/10 text-white/70 hover:text-white rounded-lg shrink-0"
+                          disabled={videoLoading}
+                        >
+                          {videoLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Refresh"}
+                        </Button>
+                      </div>
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-semibold text-white/60 uppercase tracking-wider">Link Expires In (hours)</label>
+                      <Input
+                        type="number"
+                        min="1"
+                        value={vgHours}
+                        onChange={(e) => setVgHours(e.target.value)}
+                        className="bg-white/5 border-white/10 text-white h-10 text-sm"
+                        disabled={vgSubmitting}
+                      />
+                    </div>
+
+                    <Button
+                      type="submit"
+                      disabled={vgSubmitting}
+                      className="w-full h-10 bg-gold text-gold-foreground hover:bg-gold/90 font-semibold text-sm rounded-lg flex items-center justify-center gap-1.5 transition-all mt-2"
+                    >
+                      {vgSubmitting ? (
+                        <>
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          <Mail className="h-4 w-4" />
+                          Send One-Time Link
+                        </>
+                      )}
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div>
+              <Card className="border border-white/10 bg-neutral-950/80 backdrop-blur-md">
+                <CardHeader className="border-b border-white/5 py-4">
+                  <CardTitle className="text-md font-bold flex items-center gap-2 text-white font-[family-name:var(--font-poppins)]">
+                    <AlertCircle className="h-4.5 w-4.5 text-gold" />
+                    How it works
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="pt-4 text-xs text-white/60 space-y-3 leading-relaxed">
+                  <p>• Link is unique per email and dies after the first open.</p>
+                  <p>• The video URL is signed and proxied — never exposed in the page source.</p>
+                  <p>• Right-click, save, and dev-tools shortcuts are discouraged, but a determined viewer can still screen-record or film the screen.</p>
+                  <p className="text-gold">For real protection, add DRM or a visible email watermark later.</p>
+                </CardContent>
+              </Card>
+            </div>
           </motion.div>
         )}
 

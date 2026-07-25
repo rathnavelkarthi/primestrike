@@ -6,6 +6,28 @@ import { supabaseAdmin, VIDEO_BUCKET } from "@/lib/supabaseAdmin";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
+// Authorize the request: valid admin Supabase session OR shared secret.
+async function isAuthorized(request: Request, adminSecret?: string): Promise<boolean> {
+  if (process.env.VIDEO_ADMIN_SECRET && adminSecret === process.env.VIDEO_ADMIN_SECRET) {
+    return true;
+  }
+  const authHeader = request.headers.get("authorization") || "";
+  const bearer = authHeader.toLowerCase().startsWith("bearer ")
+    ? authHeader.slice(7)
+    : "";
+  if (!bearer) return false;
+
+  const { data, error } = await supabaseAdmin.auth.getUser(bearer);
+  if (error || !data?.user) return false;
+
+  const { data: profile } = await supabaseAdmin
+    .from("profiles")
+    .select("role")
+    .eq("id", data.user.id)
+    .single();
+  return profile?.role === "admin";
+}
+
 // POST /api/video/grant
 // body: { email, videoPath, expiresInHours?, adminSecret }
 // Creates a one-time watch grant and emails the unique link to the user.
@@ -14,8 +36,10 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { email, videoPath, expiresInHours, adminSecret } = body;
 
-    // Simple gate so random visitors can't mint grants.
-    if (!process.env.VIDEO_ADMIN_SECRET || adminSecret !== process.env.VIDEO_ADMIN_SECRET) {
+    // Auth: allow EITHER a valid admin Supabase session (Bearer token) OR the
+    // shared VIDEO_ADMIN_SECRET (for curl/automation).
+    const authed = await isAuthorized(request, adminSecret);
+    if (!authed) {
       return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
     }
 
